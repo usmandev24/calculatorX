@@ -1,11 +1,38 @@
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="styles/main_styles.css">
-  <title>Title</title>
-</head>
-<body>
-  
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles/main_styles.css" />
+    <title>Calculator</title>
+  </head>
+
+  <body class="bg-white dark:bg-[#202020] dark:text-amber-50">
+    <nav class="">
+      <div class="mt-1 flex content-center gap-2">
+        <button id="togBtn"
+          class="ml-2 rotate-90 p-2 hover:bg-gray-300 dark:text-amber-50 rounded-[5px] dark:hover:bg-gray-800"
+        >
+          |||
+        </button>
+        <h1 id="h1" class="inline text-2xl font-bold">Standard</h1>
+        <div class="ml-auto  pr-2">
+          <button id="histBtn" class="bg-gray-100 dark:bg-gray-800 p-0.5 rounded-[5px]">History</button>
+          <div id="hist" class="rounded-2xl absolute w-[50vw] p-4 h-[90vh] overflow-y-auto left-[50vw] hidden bg-gray-200 dark:bg-gray-800">
+           df
+          </div>
+        </div>
+      </div>
+      <div id="mlist" class="relative transition-[left] duration-100 left-[-50vw] w-[50vw] bg-gray-200 p-2 dark:bg-gray-900 rounded-2xl">
+        <h2 class="font-bold">Calculator</h2>
+        <ul class="p-4 pt-1">
+          <li class="nav-list">Standard<hr></li>
+          <li  class="nav-list">Scientific<hr></li>
+          <li  class="nav-list mt-2">GitHub</li>
+          <li  class="nav-list">About</li>
+          <li  class="nav-list">Email</li>
+        </ul>
+      </div>
+    </nav>
+    <script src="app.js"></script>
+  </body>
 </html>
