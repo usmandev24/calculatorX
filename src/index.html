@@ -6,33 +6,102 @@
     <title>Calculator</title>
   </head>
 
-  <body class="bg-white dark:bg-[#202020] dark:text-amber-50">
+  <body class="bg-white dark:bg-[#161616] dark:text-white">
     <nav class="">
-      <div class="mt-1 flex content-center gap-2">
-        <button id="togBtn"
-          class="ml-2 rotate-90 p-2 hover:bg-gray-300 dark:text-amber-50 rounded-[5px] dark:hover:bg-gray-800"
+      <div class=" flex items-center gap-2">
+        <button
+          id="togBtn"
+          class="ml-2 text-2xl rotate-90 rounded-[5px] p-2 hover:bg-gray-300 dark:text-amber-50 dark:hover:bg-gray-800"
         >
           |||
         </button>
         <h1 id="h1" class="inline text-2xl font-bold">Standard</h1>
-        <div class="ml-auto  pr-2">
-          <button id="histBtn" class="bg-gray-100 dark:bg-gray-800 p-0.5 rounded-[5px]">History</button>
-          <div id="hist" class="rounded-2xl absolute w-[50vw] p-4 h-[90vh] overflow-y-auto left-[50vw] hidden bg-gray-200 dark:bg-gray-800">
-           df
+        <div class="ml-auto pr-2">
+          <button
+            id="histBtn"
+            class="rounded-[5px] bg-purple-200 p-1 dark:bg-gray-800"
+          >
+            History
+          </button>
+          <div
+            id="hist"
+            class="absolute left-[49vw] z-8 hidden h-auto max-h-[80vh] w-[50vw] overflow-y-auto rounded-2xl bg-gray-200 p-4 md:top-0 md:left-[65vw]
+             md:block md:h-[100vh] md:w-[35vw] dark:bg-gray-800 md:max-h-[100vh]"
+          >
+            <h2 class="border-b border-blue-500 w-[5rem] text-xl">History :</h2>
+            <div id="histItems" class="p-2">
+              Nothing Here...
+            </div>
           </div>
         </div>
       </div>
-      <div id="mlist" class="relative transition-[left] duration-100 left-[-50vw] w-[50vw] bg-gray-200 p-2 dark:bg-gray-900 rounded-2xl">
+      <div
+        id="mlist"
+        class="relative left-[-50vw] z-10 w-[50vw] rounded-2xl bg-pink-50 p-2 transition-[left] duration-100 dark:bg-gray-900"
+      >
         <h2 class="font-bold">Calculator</h2>
         <ul class="p-4 pt-1">
-          <li class="nav-list">Standard<hr></li>
-          <li  class="nav-list">Scientific<hr></li>
-          <li  class="nav-list mt-2">GitHub</li>
-          <li  class="nav-list">About</li>
-          <li  class="nav-list">Email</li>
+          <li class="nav-list">
+            Standard
+            <hr />
+          </li>
+          <li class="nav-list">
+            Scientific
+            <hr />
+          </li>
+          <li class="nav-list mt-2">GitHub</li>
+          <li class="nav-list">About</li>
+          <li class="nav-list">Email</li>
         </ul>
       </div>
     </nav>
+    <div id="body">
+      <div id="preData"
+        class="w-90vw absolute top-[15vh] left-[5vw] h-[14vh] w-[90vw] overflow-y-auto pl-4 text-sm md:w-[60vw]"
+      >
+      
+      </div>
+      <input
+        type="text"
+        placeholder="0"
+        class="absolute top-[30vh] left-[5vw] h-[10vh] w-[90vw] rounded-sm p-2 pl-4 text-4xl outline-0 md:w-[60vw]"
+      />
+      <div
+        id="standard"
+        class="absolute top-[40vh] left-[5vw] grid h-[60vh] w-[90vw] grid-cols-4 justify-items-stretch gap-1 p-2 md:w-[60vw]"
+      >
+        <button class="st-btn bg-blue-200 dark:bg-[#1f1f1f]">%</button>
+        <button class="st-btn bg-blue-200 dark:bg-[#1f1f1f]">CE</button>
+        <button class="st-btn bg-blue-200 dark:bg-[#1f1f1f]">C</button>
+        <button class="st-btn bg-blue-200 dark:bg-[#1f1f1f]">←</button>
+        <button class="st-btn bg-blue-200 text-xl dark:bg-[#1f1f1f]">
+          1/x
+        </button>
+        <button class="st-btn bg-blue-200 text-xl dark:bg-[#1f1f1f]">
+          x^2
+        </button>
+        <button class="st-btn bg-blue-200 text-xl dark:bg-[#1f1f1f]">
+          2√x
+        </button>
+        <button class="st-btn bg-blue-200 dark:bg-[#1f1f1f]">÷</button>
+        <button class="st-btn">7</button>
+        <button class="st-btn">8</button>
+        <button class="st-btn">9</button>
+        <button class="st-btn bg-blue-200 dark:bg-[#1f1f1f]">×</button>
+        <button class="st-btn">4</button>
+        <button class="st-btn">5</button>
+        <button class="st-btn">6</button>
+        <button class="st-btn bg-blue-200 dark:bg-[#1f1f1f]">+</button>
+        <button class="st-btn">1</button>
+        <button class="st-btn">2</button>
+        <button class="st-btn">3</button>
+        <button class="st-btn bg-blue-200 dark:bg-[#1f1f1f]">-</button>
+        <button class="st-btn">±</button>
+        <button class="st-btn">0</button>
+        <button class="st-btn">.</button>
+        <button class="st-btn bg-blue-600">=</button>
+      </div>
+    </div>
     <script src="app.js"></script>
   </body>
 </html>
