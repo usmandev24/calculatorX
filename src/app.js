@@ -57,11 +57,11 @@ class State {
     this.dataValid = "123456789+-*×÷/0.()^%√";
     this.vldTouchBtns = "1234567890+-×÷.%^√";
     this.oper = "+-*×÷/^.";
+    this.result = 0;
     this.preValue = "";
     this.preSelection = 1;
   }
   start() {
-    let result;
     this.touchBtnStart(this.btns);
     this.input.addEventListener("keypress", (event) => {
       this.preSelection = this.input.selectionEnd;
@@ -74,9 +74,9 @@ class State {
         this.input.selectionEnd = this.preSelection;
       }
       if (event.key == "Enter") {
-        this.updateHist(result);
-        this.preValue = result
-        this.input.value = result
+        this.updateHist(this.result);
+        this.preValue = this.result;
+        this.input.value = this.result;
       }
     });
     this.input.addEventListener("input", (event) => {
@@ -85,8 +85,8 @@ class State {
         this.preValue,
         this.preSelection,
       );
-      result = this.praser()
-      this.updateInstCal(result);
+      this.result = this.praser();
+      this.updateInstCal(this.result);
     });
   }
 
@@ -100,20 +100,21 @@ class State {
           this.preSelection,
           btn.textContent,
         );
-        this.updateInstCal(this.praser())
+        this.result = this.praser();
+        this.updateInstCal(this.result);
       });
     }
   }
   touchInputValidater(pvalue, pselection, btnContent) {
     let value = this.input.value;
-    let curntSelection = pselection;
+    let curntSelection = pselection; console.log(btnContent)
     if (this.vldTouchBtns.includes(btnContent)) {
       value =
         value.slice(0, pselection) +
         btnContent +
         value.slice(pselection, value.length);
       curntSelection += 1;
-    } else if (btnContent == "( )") {
+    } else if (btnContent.trim() == "( )") {
       value =
         value.slice(0, pselection) +
         "()" +
@@ -148,8 +149,8 @@ class State {
       input.value = pvalue;
       input.selectionEnd = pselection - 1;
     }
-    input.value = input.value.replace("*", "×");
-    input.value = input.value.replace("/", "÷");
+    input.value = input.value.replace("*", "×").replace("/", "÷");
+    input.selectionEnd = pselection;
     return this.opChecker(pvalue, pselection);
   }
 
@@ -180,17 +181,18 @@ class State {
 
   praser() {
     let value = this.input.value;
-    value = value.replaceAll("×", "*")
-    .replaceAll("÷", "/")
-    .replaceAll("^", "**")
-    .replaceAll("%", "/100");
+    value = value
+      .replaceAll("×", "*")
+      .replaceAll("÷", "/")
+      .replaceAll("^", "**")
+      .replaceAll("%", "/100");
     console.log(value);
     try {
       let instResult = Number(eval(value));
       if (value.length == 0) {
         return "0";
       }
-      if (instResult/Number(instResult.toFixed(0)) === 1) {
+      if (instResult / Number(instResult.toFixed(0)) === 1) {
         return instResult;
       }
       return instResult.toFixed(3);
@@ -204,8 +206,13 @@ class State {
   }
   updateHist(result) {
     let item = document.createElement("p");
+    this.preValue = this.preValue
+      .replaceAll("+", " + ")
+      .replaceAll("-", " - ")
+      .replaceAll("×", " × ")
+      .replaceAll("÷", " ÷ ");
     let value = document.createTextNode(`${this.preValue} = ${result} `);
-    item.appendChild(value)
+    item.appendChild(value);
     this.hist.appendChild(item);
   }
 }
