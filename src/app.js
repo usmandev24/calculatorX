@@ -12,7 +12,7 @@ class Interface {
       if (!mshow) {
         this.mlist.classList.remove("left-[-50vw]");
         this.mlist.classList.add("left-[0vw]");
-        
+
         mshow = true;
       } else {
         this.mlist.classList.remove("left-[0vw]");
@@ -30,7 +30,8 @@ class Interface {
         this.hist.classList.replace("block", "hidden");
         this.histBtn.textContent = "History";
         histShow = false;
-      } event.stopPropagation();
+      }
+      event.stopPropagation();
     });
     window.addEventListener("click", (event) => {
       event.stopPropagation();
@@ -40,10 +41,10 @@ class Interface {
         histShow = false;
       }
       if (mshow) {
-        this.mlist.classList.replace("left-[0vw]", "left-[-50vw]")
+        this.mlist.classList.replace("left-[0vw]", "left-[-50vw]");
         mshow = false;
       }
-    })
+    });
   }
 }
 class State {
@@ -52,8 +53,9 @@ class State {
     this.input = document.querySelector("input");
     this.instCalculation = document.getElementById("preData");
     this.btns = Array.from(document.querySelectorAll(".st-btn"));
-    this.dataValid = "123456789+-*/0.()^%";
-    this.oper = "+-*/^%.";
+    this.dataValid = "123456789+-*×÷/0.()^%√";
+    this.vldTouchBtns = "1234567890+-×÷.%^√";
+    this.oper = "+-*×÷/^%.";
     this.preValue = "";
     this.preSelection = 1;
   }
@@ -63,35 +65,71 @@ class State {
       this.preSelection = this.input.selectionEnd;
       if (event.key == "(") {
         this.preValue =
-        this.preValue.slice(0, this.preSelection) +
+          this.preValue.slice(0, this.preSelection) +
           ")" +
           this.preValue.slice(this.preSelection, this.preValue.length);
-          this.input.value = this.preValue;
-          this.input.selectionEnd = this.preSelection;
+        this.input.value = this.preValue;
+        this.input.selectionEnd = this.preSelection;
       }
     });
-    this.input.addEventListener("input",event => {
+    this.input.addEventListener("input", (event) => {
       this.preSelection = this.input.selectionEnd;
-      [this.preValue, this.preSelection]= this.validater(this.input, this.preValue, this.preSelection, this.dataValid, this.oper)
+      [this.preValue, this.preSelection] = this.validater(
+        this.input,
+        this.preValue,
+        this.preSelection,
+        this.dataValid,
+        this.oper,
+      );
     });
   }
 
   touchBtnStart(btns) {
-    let value;
-    for(let btn of btns) {
+    for (let btn of btns) {
       btn.addEventListener("click", () => {
         this.input.focus();
-        value = this.input.value;
-        this.preSelection = this.input.selectionEnd; console.log(this.input.selectionEnd)
-        value = value.slice(0,this.preSelection) + btn.textContent + value.slice(this.preSelection+btn.textContent.length-1, value.length)
-        this.input.value = value;
-        this.input.selectionEnd = this.preSelection+1;
-      })
+        this.preSelection = this.input.selectionEnd;
+        [this.preValue , this.preSelection] = this.touchInputValidater(this.preValue, this.preSelection, btn.textContent)
+      });
     }
   }
-  // pvalue = previous vallid value of input, 
+  touchInputValidater(pvalue, pselection, btnContent) {
+    console.log(this.input.selectionEnd, pselection);
+    let value = this.input.value;
+    if (this.vldTouchBtns.includes(btnContent)) {
+      value =
+        value.slice(0, pselection) +
+        btnContent +
+        value.slice(pselection, value.length);
+        pselection+=1;
+    } else if (btnContent == "( )") {
+      value =
+        value.slice(0, pselection) +
+        "()" +
+        value.slice(pselection, value.length);
+        pselection+=1;
+    } else if (btnContent == "←" && pselection !=0) {
+      value =
+        value.slice(0, pselection-1) +
+        value.slice(pselection, value.length);
+     pselection -=1;
+    } else if (btnContent == "AC") {
+      value = "";
+      pselection = 0;
+    } else if (btnContent == "PI") {
+      value =
+        value.slice(0, pselection) + "3.14" +
+        value.slice(pselection, value.length);
+      pselection += 4;
+    }
+    pvalue = value;
+    this.input.value = value;
+    this.input.selectionEnd = pselection;console.log(this.input.selectionEnd, pselection);
+    return [pvalue, pselection ]
+  }
+  // pvalue = previous vallid value of input,
   //input = dom element, pvlaue= string, pselection = number, datavalid = string, oper = string
-  validater (input , pvalue, pselection, dataValid, oper ) {
+  validater(input, pvalue, pselection, dataValid, oper) {
     if (
       !dataValid.includes(input.value[input.selectionEnd - 1]) &&
       input.value.length !== 0 &&
@@ -121,15 +159,11 @@ class State {
     pvalue = input.value;
     return [pvalue, pselection];
   }
-  praser() {
-    
-  }
-  evaluator () {
-
-  }
+  praser() {}
+  evaluator() {}
 }
 let interface = new Interface();
 interface.setEvents();
 let state = new State(interface);
 
-state.start()
+state.start();
