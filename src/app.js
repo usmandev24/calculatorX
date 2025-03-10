@@ -4,10 +4,29 @@ class Interface {
     this.mlist = document.getElementById("mlist");
     this.hist = document.getElementById("hist");
     this.histBtn = document.getElementById("histBtn");
+    this.btnSci = document.getElementById("btnSci");
+    this.btnStan = document.getElementById("btnStan");
+    this.stan = document.getElementById("stan");
+    this.sci = document.getElementById("sci");
+    this.displaying = "stan";
   }
   setEvents() {
     let mshow = false;
     let histShow = false;
+    this.btnSci.addEventListener("click", () => {
+      if(this.displaying == "stan") {
+        this.stan.classList.replace("grid" ,"hidden");
+        this.sci.classList.replace("hidden", "grid");
+        this.displaying = "sci";
+      }
+    })
+    this.btnStan.addEventListener("click", ()=> {
+      if(this.displaying == "sci") {
+        this.sci.classList.replace("grid", "hidden");
+        this.stan.classList.replace("hidden", "grid");
+        this.displaying = "stan";
+      }
+    })
     this.togBtn.addEventListener("click", (event) => {
       if (!mshow) {
         this.mlist.classList.remove("left-[-50vw]");
@@ -21,22 +40,24 @@ class Interface {
       }
       event.stopPropagation();
     });
+    this.hist.addEventListener("click", (event)=> {
+      event.stopPropagation()
+    })
     this.histBtn.addEventListener("click", (event) => {
       if (!histShow) {
-        this.hist.classList.replace("hidden", "block");
-        this.histBtn.textContent = "Close";
+        this.hist.classList.replace("right-[-80vw]", "right-[0vw]");
+        this.histBtn.textContent = "";
         histShow = true;
       } else {
-        this.hist.classList.replace("block", "hidden");
+        this.hist.classList.replace("right-[0vw]", "right-[-80vw]");
         this.histBtn.textContent = "History";
         histShow = false;
       }
       event.stopPropagation();
     });
     window.addEventListener("click", (event) => {
-      event.stopPropagation();
       if (histShow) {
-        this.hist.classList.replace("block", "hidden");
+        this.hist.classList.replace("right-[0vw]", "right-[-80vw]");
         this.histBtn.textContent = "History";
         histShow = false;
       }
