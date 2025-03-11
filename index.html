@@ -11,13 +11,17 @@
       <div class="flex items-center gap-2">
         <button
           id="togBtn"
-          class="relative z-20 ml-2 rotate-90 rounded-[5px] p-2 text-2xl hover:bg-gray-300 dark:text-amber-50 dark:hover:bg-gray-800"
+          class="relative left-1 z-20 ml-2 rotate-90 rounded-[5px] p-2 text-2xl hover:bg-gray-300 dark:text-amber-50 dark:hover:bg-gray-800"
         >
           |||
         </button>
-        <h1 id="h1" class="inline text-2xl font-bold">Scientific</h1>
-        <h2 id = "deg"
-         class="inline p-[.2rem_.3rem] hover:bg-gray-300 hover:dark:bg-gray-800 rounded-[4px]">DEG</h2>
+        <h1 id="h1" class="inline text-2xl font-bold pl-2">Scientific</h1>
+        <h2
+          id="deg"
+          class="inline text-[.8rem] rounded-[4px] p-[.4rem_.2rem_0rem_.2rem]"
+        >
+          RAD
+        </h2>
         <div class="ml-auto pr-2">
           <button
             id="histBtn"
@@ -27,20 +31,27 @@
           </button>
           <div
             id="hist"
-            class="fixed top-0 right-[-80vw] z-8  h-auto max-h-[80vh] w-[65vw] overflow-y-auto rounded-[.5rem] bg-gray-300 dark:bg-[#000] transition-[right] duration-100 p-4 opacity-90 md:top-0 md:left-[65vw] md:block md:h-[100vh] md:max-h-[100vh] md:w-[35vw] md:opacity-100"
+            class="fixed top-0 right-[-80vw] z-8 h-auto max-h-[80vh] w-[80vw]  overflow-y-auto rounded-[.5rem] bg-gray-300 p-4 opacity-90 transition-[right] duration-100 md:top-0 md:left-[65vw] md:block md:h-[100vh] md:max-h-[100vh] md:w-[35vw] sm:w-[65vw] md:opacity-100 dark:bg-[#000]"
           >
-          <div class="flex justify-between"><h2 class="text-[1rem] font-bold md:text-xl">Calculation History</h2>
-            <button class="rounded-[5px] bg-purple-500 p-1 dark:bg-gray-800">clear</button></div>
-            
-            <div id="histItems" class="p-2"></div>
+            <div class="flex justify-between">
+              <h2 class="text-[1.2rem] font-bold md:text-xl">
+                Calculation History
+              </h2>
+              <button id="closeHist" class="rounded-[5px] bg-purple-500 p-2 pt-1 pb-1 text-[1.1rem] dark:bg-gray-800">
+                close
+              </button>
+            </div>
+            <div id="histItems" class="p-2">
+
+            </div>
           </div>
         </div>
       </div>
       <div
         id="mlist"
-        class="absolute top-0 left-[-50vw] z-10 w-[50vw] rounded-2xl bg-pink-50 p-2 transition-[left] duration-100 md:w-[40vw] dark:bg-[#000]"
+        class="absolute top-0 left-[-50vw] z-10 w-[50vw] rounded-xl border border-gray-300 dark:border-gray-950 bg-gray-200 p-2 transition-[left] duration-100 md:w-[40vw] dark:bg-[#000]"
       >
-        <h2 class="mt-[2rem] font-bold">Calculator</h2>
+        <h2 class="mt-[2rem] text-[1.4rem] font-bold">Calculator</h2>
         <ul class="p-4 pt-1">
           <li id="btnStan" class="nav-list">
             Standard
@@ -58,9 +69,11 @@
     </nav>
     <div id="body">
       <div
-        id="preData"
-        class="absolute top-[12vh] left-[5vw] h-[5vh] w-[90vw] max-w-[90vw] pl-4 text-2xl md:w-[60vw] dark:text-[#49ba49]"
-      ></div>
+        id="instCal"
+        class="absolute m-[2vw] mt-0  text-2xl text-green-600 top-[12vh] left-[2vw] h-[5vh] w-[90vw] max-w-[90vw] pl-1 md:w-[60vw]"
+      >
+        
+      </div>
       <textarea
         placeholder="0"
         class="absolute top-[20vh] left-[0vw] m-[2vw] mt-0 h-[20vh] w-[96vw] resize-none rounded-2xl bg-purple-50 p-2 pr-4 pl-4 text-[1.5rem] outline-0 md:w-[61vw] dark:bg-gray-800"
@@ -100,7 +113,10 @@
         id="sci"
         class="absolute top-[40vh] left-[0vw] grid h-[60vh] w-[100vw] grid-cols-5 justify-items-stretch gap-1 p-[2vw] pb-2 md:w-[65vw] md:p-[.5rem_1rem_.5rem_1rem]"
       >
-        <button id="inv" class="st-btn bg-gray-300 text-[1rem] dark:bg-[#1f1f1f]">
+        <button
+          id="inv"
+          class="st-btn bg-gray-300 text-[1rem] dark:bg-[#1f1f1f]"
+        >
           INV
         </button>
         <button class="st-btn cSci bg-blue-100 text-[1rem] dark:bg-[#1f1f1f]">
@@ -113,7 +129,10 @@
           tan
         </button>
         <button class="st-btn bg-blue-300 dark:bg-[#1f1f1f]">AC</button>
-        <button id="hyp" class="st-btn bg-gray-300 text-[1rem] dark:bg-[#1f1f1f]">
+        <button
+          id="hyp"
+          class="st-btn bg-gray-300 text-[1rem] dark:bg-[#1f1f1f]"
+        >
           hyp
         </button>
         <button class="st-btn bg-blue-200 dark:bg-[#1f1f1f]">e</button>
@@ -121,7 +140,7 @@
         <button class="st-btn bg-blue-200 dark:bg-[#1f1f1f]">√</button>
         <button class="st-btn bg-blue-200 dark:bg-[#1f1f1f]">^</button>
         <button class="st-btn cSci bg-blue-100 text-[1rem] dark:bg-[#1f1f1f]">
-          sec
+          csc
         </button>
         <button class="st-btn bg-blue-200 text-xl dark:bg-[#1f1f1f]">!</button>
         <button class="st-btn bg-blue-200 text-xl dark:bg-[#1f1f1f]">
@@ -130,7 +149,7 @@
         <button class="st-btn bg-blue-200 text-xl dark:bg-[#1f1f1f]">%</button>
         <button class="st-btn bg-blue-200 dark:bg-[#1f1f1f]">÷</button>
         <button class="st-btn cSci bg-blue-100 text-[1rem] dark:bg-[#1f1f1f]">
-          csc
+          sec
         </button>
         <button class="st-btn">7</button>
         <button class="st-btn">8</button>
@@ -150,7 +169,7 @@
         <button class="st-btn">2</button>
         <button class="st-btn">3</button>
         <button class="st-btn bg-blue-200 dark:bg-[#1f1f1f]">-</button>
-        <button class="st-btn cSci bg-blue-200 text-[1rem] dark:bg-[#1f1f1f]">
+        <button class="st-btn cSci bg-blue-100 text-[1rem] dark:bg-[#1f1f1f]">
           log
         </button>
         <button class="st-btn">.</button>
