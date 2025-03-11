@@ -5,6 +5,7 @@ class Interface {
     this.mlist = document.getElementById("mlist");
     this.hist = document.getElementById("hist");
     this.histBtn = document.getElementById("histBtn");
+    this.closeHistBtn = document.getElementById("closeHist")
     this.mBtnSci = document.getElementById("btnSci");
     this.mBtnStan = document.getElementById("btnStan");
     this.stanDiv = document.getElementById("stan");
@@ -20,10 +21,10 @@ class Interface {
         "cosh⁻¹",
         "tanh⁻¹",
         "csch⁻¹",
-        "coth⁻¹",
         "sech⁻¹",
-        "log",
+        "coth⁻¹",
         "ln",
+        "log",
       ],
       currnetType: "default",
     };
@@ -41,6 +42,7 @@ class Interface {
       event.stopPropagation();
     });
     this.histBtn.addEventListener("click", (event) => this.showHist(event));
+    this.closeHistBtn.onclick = () => this.closeHist();
     this.hypBtn.addEventListener("click", () => this.hypSwitch());
     this.invBtn.addEventListener("click", () => this.invSwitch());
     window.addEventListener("click", (event) => this.hideSide(event));
@@ -87,6 +89,11 @@ class Interface {
       this.histShow = false;
     }
     event.stopPropagation();
+  }
+  closeHist () {
+    this.hist.classList.replace("right-[0vw]", "right-[-80vw]");
+      this.histBtn.textContent = "History";
+      this.histShow = false;
   }
   hideSide(event) {
     if (this.histShow) {
@@ -178,11 +185,11 @@ class State {
   constructor(ui) {
     this.ui = ui;
     this.input = document.querySelector("textarea");
-    this.instCalculation = document.getElementById("preData");
+    this.instCalResult = document.getElementById("instCal");
     this.btns = Array.from(document.querySelectorAll(".st-btn"));
     this.hist = document.getElementById("histItems");
     this.dataValid = "123456789+-*×÷/0.()^%√!";
-    this.vldTouchBtns = "1234567890+-×÷.%^√!";
+    this.vldTouchBtns = "1234567890+-×÷.%^!";
     this.oper = "+-*×÷/^.";
     this.result = 0;
     this.preValue = "";
@@ -191,6 +198,9 @@ class State {
   }
   start() {
     this.touchBtnStart(this.btns);
+    this.keyFunctionsStart();
+  }
+  keyFunctionsStart() {
     this.input.addEventListener("keydown", (event) => {
       this.preSelection = this.input.selectionEnd;
       if (event.key == "(") {
@@ -203,9 +213,7 @@ class State {
       }
       this.key = event.key;
       if (event.key == "Enter") {
-        this.updateHist(this.result);
-        this.preValue = this.result;
-        this.input.value = this.result;
+        this.setResults();
       }
     });
     this.input.addEventListener("input", (event) => {
@@ -215,7 +223,7 @@ class State {
         this.preSelection,
       );
       this.result = this.praser();
-      this.updateInstCal(this.result);
+      this.updateInstResults(this.result);
     });
   }
 
@@ -230,7 +238,7 @@ class State {
           btn.textContent,
         );
         this.result = this.praser();
-        this.updateInstCal(this.result);
+        this.updateInstResults(this.result);
       });
     }
   }
@@ -250,13 +258,16 @@ class State {
       value =
         value.slice(0, pselection - 1) + value.slice(pselection, value.length);
       curntSelection -= 1;
+    } else if (btnContent == "=") {
+      this.setResults();
+      return
     } else if (btnContent == "( )") {
       value =
         value.slice(0, pselection) +
         "()" +
         value.slice(pselection, value.length);
       curntSelection += 1;
-    }  else if (btnContent == "AC") {
+    } else if (btnContent == "AC") {
       value = "";
       curntSelection = 0;
     } else if (btnContent == "π") {
@@ -271,6 +282,12 @@ class State {
         "2.718" +
         value.slice(pselection, value.length);
       curntSelection += 5;
+    } else if (btnContent == "√") {
+      value =
+        value.slice(0, pselection) +
+        "√()" +
+        value.slice(pselection, value.length);
+      curntSelection += 2;
     } else if (sciIndex != -1) {
       value =
         value.slice(0, pselection) +
@@ -335,21 +352,21 @@ class State {
       "csc": "1/Math.sin",
       "sec": "1/Math.cos",
       "cot": "1/Math.tan",
-    
+
       "sin⁻¹": "Math.asin",
       "cos⁻¹": "Math.acos",
       "tan⁻¹": "Math.atan",
       "csc⁻¹": "1/Math.asin",
       "sec⁻¹": "1/Math.acos",
       "cot⁻¹": "1/Math.atan",
-    
+
       "sinh": "Math.sinh",
       "cosh": "Math.cosh",
       "tanh": "Math.tanh",
       "csch": "1/Math.sinh",
       "sech": "1/Math.cosh",
       "coth": "1/Math.tanh",
-    
+
       "sinh⁻¹": "Math.asinh",
       "cosh⁻¹": "Math.acosh",
       "tanh⁻¹": "Math.atanh",
@@ -357,23 +374,29 @@ class State {
       "sech⁻¹": "1/Math.acosh",
       "coth⁻¹": "1/Math.atanh",
       "log": "Math.log10",
-      "ln" : "Math.log"
+      "ln": "Math.log"
     };
-    
+
     let value = this.input.value;
     value = value
       .replaceAll("×", "*")
       .replaceAll("÷", "/")
       .replaceAll("^", "**")
-      .replaceAll("%", "/100");
-    
+      .replaceAll("%", "/100")
+      .replaceAll("√", "Math.sqrt");
+    let factorials = value.match(/\d+!/g);
+    if (factorials != null) {
+      for (let tofac of factorials) {
+        let num = Number(tofac.slice(0, tofac.length-1))
+        value = value.replace(tofac, `${factorial(num)}`)
+      }
+    }
     if (this.ui.displaying == "sci") {
       for (let key of Object.keys(replaceBtns)) {
-        let test = new RegExp(key +"(?=\\()", "g")
+        let test = new RegExp(key + "(?=\\()", "g")
         value = value.replaceAll(test, replaceBtns[key]);
       }
     }
-    console.log(value);
     try {
       let instResult = Number(eval(value));
       if (value.length == 0) {
@@ -381,30 +404,63 @@ class State {
       }
       if (instResult / Number(instResult.toFixed(0)) === 1) {
         return instResult;
-      }
+      } else if (instResult / instResult != 1) {
+        return "?"
+      };
       return instResult.toFixed(3);
     } catch {
       return "?";
     }
   }
-  updateInstCal(result) {
-    this.instCalculation.textContent = "";
-    this.instCalculation.textContent = ` = ${result}`;
+  updateInstResults(result) {
+    this.instCalResult.textContent = "";
+    this.instCalResult.textContent = ` = ` + result;
   }
   updateHist(result) {
+    let input = this.input;
     let item = document.createElement("p");
+    let resItem =document.createElement("span");
+    resItem.classList.add("text-green-600", "text-[1.4rem]");
+    item.classList.add("p-2", "text-[1.2rem]");
     this.preValue = this.preValue
       .replaceAll("+", " + ")
       .replaceAll("-", " - ")
       .replaceAll("×", " × ")
       .replaceAll("÷", " ÷ ");
-    let value = document.createTextNode(`${this.preValue} = ${result} `);
+    let value = document.createTextNode(`${this.preValue} = `);
+    resItem.textContent = result;
     item.appendChild(value);
+    item.appendChild(resItem);
     this.hist.appendChild(item);
+    item.onclick =  () => {
+      input.value = value.textContent.slice(0, value.textContent.length-3);
+    }
+    resItem.onclick = (event) => {
+      input.value = resItem.textContent;
+      event.stopPropagation();
+    }
+    
+  }
+  setResults() {
+    if (this.result !== "?") {
+      this.updateHist(this.result);
+      this.preValue = this.result;
+      this.input.value = this.result;
+    }
+
   }
 }
-let interface = new Interface();
-interface.setEvents();
-let state = new State(interface);
+function factorial(num) {
+  if (num > 1) {
+    return num * factorial(num-1)
+  }
+  return 1;
+}
+function main() {
+  let interface = new Interface();
+  interface.setEvents();
+  let state = new State(interface);
+  state.start();
+}
+window.addEventListener("load", () => main());
 
-state.start();

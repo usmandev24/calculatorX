@@ -1,8 +1,9 @@
 @import "tailwindcss" source(none);
 @source "../../index.html";
+@source "../app.js";
 @layer components {
   .nav-list {
-    @apply hover:bg-gray-200 text-lg hover:dark:bg-gray-700 p-1 mt-1 rounded-[5px]
+    @apply hover:bg-purple-200 text-xl hover:dark:bg-gray-700 p-1 mt-1 rounded-[5px]
   }
   .st-btn {
     @apply text-2xl bg-gray-100 dark:bg-[#302f2f] rounded-full
