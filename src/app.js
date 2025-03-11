@@ -1,71 +1,177 @@
 class Interface {
   constructor() {
+    this.h1 = document.getElementById("h1");
     this.togBtn = document.getElementById("togBtn");
     this.mlist = document.getElementById("mlist");
     this.hist = document.getElementById("hist");
     this.histBtn = document.getElementById("histBtn");
-    this.btnSci = document.getElementById("btnSci");
-    this.btnStan = document.getElementById("btnStan");
-    this.stan = document.getElementById("stan");
-    this.sci = document.getElementById("sci");
-    this.displaying = "stan";
+    this.mBtnSci = document.getElementById("btnSci");
+    this.mBtnStan = document.getElementById("btnStan");
+    this.stanDiv = document.getElementById("stan");
+    this.sciDiv = document.getElementById("sci");
+    this.deg = document.getElementById("deg");
+    this.allSciBtnsNode = document.querySelectorAll(".cSci");
+    this.sciBtns = {
+      default: ["sin", "cos", "tan", "csc", "sec", "cot", "ln", "log"],
+      inv: ["sin⁻¹", "cos⁻¹", "tan⁻¹", "csc⁻¹", "sec⁻¹", "cot⁻¹", "ln", "log"],
+      hyp: ["sinh", "cosh", "tanh", "csch", "sech", "coth", "ln", "log"],
+      hypInv: [
+        "sinh⁻¹",
+        "cosh⁻¹",
+        "tanh⁻¹",
+        "csch⁻¹",
+        "coth⁻¹",
+        "sech⁻¹",
+        "log",
+        "ln",
+      ],
+      currnetType: "default",
+    };
+    this.hypBtn = document.getElementById("hyp");
+    this.invBtn = document.getElementById("inv");
+    this.displaying = "sci";
+    this.mshow = false;
+    this.histShow = false;
   }
   setEvents() {
-    let mshow = false;
-    let histShow = false;
-    this.btnSci.addEventListener("click", () => {
-      if(this.displaying == "stan") {
-        this.stan.classList.replace("grid" ,"hidden");
-        this.sci.classList.replace("hidden", "grid");
-        this.displaying = "sci";
-      }
-    })
-    this.btnStan.addEventListener("click", ()=> {
-      if(this.displaying == "sci") {
-        this.sci.classList.replace("grid", "hidden");
-        this.stan.classList.replace("hidden", "grid");
-        this.displaying = "stan";
-      }
-    })
-    this.togBtn.addEventListener("click", (event) => {
-      if (!mshow) {
-        this.mlist.classList.remove("left-[-50vw]");
-        this.mlist.classList.add("left-[0vw]");
+    this.mBtnSci.addEventListener("click", (event) => this.showSciDiv(event));
+    this.mBtnStan.addEventListener("click", () => this.showStnDiv());
+    this.togBtn.addEventListener("click", (event) => this.showHideManue(event));
+    this.hist.addEventListener("click", (event) => {
+      event.stopPropagation();
+    });
+    this.histBtn.addEventListener("click", (event) => this.showHist(event));
+    this.hypBtn.addEventListener("click", () => this.hypSwitch());
+    this.invBtn.addEventListener("click", () => this.invSwitch());
+    window.addEventListener("click", (event) => this.hideSide(event));
+  }
+  showStnDiv() {
+    if (this.displaying == "sci") {
+      this.sciDiv.classList.replace("grid", "hidden");
+      this.stanDiv.classList.replace("hidden", "grid");
+      this.deg.classList.replace("inline", "hidden");
+      this.displaying = "stan";
+      this.h1.textContent = "Standard";
+    }
+  }
+  showSciDiv() {
+    if (this.displaying == "stan") {
+      this.stanDiv.classList.replace("grid", "hidden");
+      this.sciDiv.classList.replace("hidden", "grid");
+      this.displaying = "sci";
+      this.h1.textContent = "Scientific";
+      this.deg.classList.replace("hidden", "inline");
+    }
+  }
+  showHideManue(event) {
+    if (!this.mshow) {
+      this.mlist.classList.remove("left-[-50vw]");
+      this.mlist.classList.add("left-[0vw]");
 
-        mshow = true;
-      } else {
-        this.mlist.classList.remove("left-[0vw]");
-        this.mlist.classList.add("left-[-50vw]");
-        mshow = false;
+      this.mshow = true;
+    } else {
+      this.mlist.classList.remove("left-[0vw]");
+      this.mlist.classList.add("left-[-50vw]");
+      this.mshow = false;
+    }
+    event.stopPropagation();
+  }
+  showHist(event) {
+    if (!this.histShow) {
+      this.hist.classList.replace("right-[-80vw]", "right-[0vw]");
+      this.histBtn.textContent = "";
+      this.histShow = true;
+    } else {
+      this.hist.classList.replace("right-[0vw]", "right-[-80vw]");
+      this.histBtn.textContent = "History";
+      this.histShow = false;
+    }
+    event.stopPropagation();
+  }
+  hideSide(event) {
+    if (this.histShow) {
+      this.hist.classList.replace("right-[0vw]", "right-[-80vw]");
+      this.histBtn.textContent = "History";
+      this.histShow = false;
+    }
+    if (this.mshow) {
+      this.mlist.classList.replace("left-[0vw]", "left-[-50vw]");
+      this.mshow = false;
+    }
+  }
+  hypSwitch() {
+    let sciBtns = this.sciBtns;
+    let i = 0;
+    if (sciBtns.currnetType == "default") {
+      for (let btn of this.allSciBtnsNode) {
+        btn.textContent = sciBtns.hyp[i];
+        i += 1;
       }
-      event.stopPropagation();
-    });
-    this.hist.addEventListener("click", (event)=> {
-      event.stopPropagation()
-    })
-    this.histBtn.addEventListener("click", (event) => {
-      if (!histShow) {
-        this.hist.classList.replace("right-[-80vw]", "right-[0vw]");
-        this.histBtn.textContent = "";
-        histShow = true;
-      } else {
-        this.hist.classList.replace("right-[0vw]", "right-[-80vw]");
-        this.histBtn.textContent = "History";
-        histShow = false;
+      this.hypBtn.classList.replace("bg-gray-300", "bg-purple-500");
+      this.hypBtn.classList.replace("dark:bg-[#1f1f1f]", "dark:bg-purple-500");
+      sciBtns.currnetType = "hyp";
+    } else if (sciBtns.currnetType == "inv") {
+      for (let btn of this.allSciBtnsNode) {
+        btn.textContent = sciBtns.hypInv[i];
+        i += 1;
       }
-      event.stopPropagation();
-    });
-    window.addEventListener("click", (event) => {
-      if (histShow) {
-        this.hist.classList.replace("right-[0vw]", "right-[-80vw]");
-        this.histBtn.textContent = "History";
-        histShow = false;
+      this.hypBtn.classList.replace("bg-gray-300", "bg-purple-500");
+      this.hypBtn.classList.replace("dark:bg-[#1f1f1f]", "dark:bg-purple-500");
+      sciBtns.currnetType = "hypInv";
+    } else if (sciBtns.currnetType == "hyp") {
+      for (let btn of this.allSciBtnsNode) {
+        btn.textContent = sciBtns.default[i];
+        i += 1;
       }
-      if (mshow) {
-        this.mlist.classList.replace("left-[0vw]", "left-[-50vw]");
-        mshow = false;
+      this.hypBtn.classList.replace("dark:bg-purple-500", "dark:bg-[#1f1f1f]");
+      this.hypBtn.classList.replace("bg-purple-500", "bg-gray-300");
+      sciBtns.currnetType = "default";
+    } else if (sciBtns.currnetType == "hypInv") {
+      for (let btn of this.allSciBtnsNode) {
+        btn.textContent = sciBtns.inv[i];
+        i += 1;
       }
-    });
+      this.hypBtn.classList.replace("dark:bg-purple-500", "dark:bg-[#1f1f1f]");
+      this.hypBtn.classList.replace("bg-purple-500", "bg-gray-300");
+      sciBtns.currnetType = "inv";
+    }
+  }
+  invSwitch() {
+    let sciBtns = this.sciBtns;
+    let i = 0;
+    if (sciBtns.currnetType == "default") {
+      for (let btn of this.allSciBtnsNode) {
+        btn.textContent = sciBtns.inv[i];
+        i += 1;
+      }
+      this.invBtn.classList.replace("bg-gray-300", "bg-purple-500");
+      this.invBtn.classList.replace("dark:bg-[#1f1f1f]", "dark:bg-purple-500");
+      sciBtns.currnetType = "inv";
+    } else if (sciBtns.currnetType == "hyp") {
+      for (let btn of this.allSciBtnsNode) {
+        btn.textContent = sciBtns.hypInv[i];
+        i += 1;
+      }
+      this.invBtn.classList.replace("bg-gray-300", "bg-purple-500");
+      this.invBtn.classList.replace("dark:bg-[#1f1f1f]", "dark:bg-purple-500");
+      sciBtns.currnetType = "hypInv";
+    } else if (sciBtns.currnetType == "inv") {
+      for (let btn of this.allSciBtnsNode) {
+        btn.textContent = sciBtns.default[i];
+        i += 1;
+      }
+      this.invBtn.classList.replace("dark:bg-purple-500", "dark:bg-[#1f1f1f]");
+      this.invBtn.classList.replace("bg-purple-500", "bg-gray-300");
+      sciBtns.currnetType = "default";
+    } else if (sciBtns.currnetType == "hypInv") {
+      for (let btn of this.allSciBtnsNode) {
+        btn.textContent = sciBtns.hyp[i];
+        i += 1;
+      }
+      this.invBtn.classList.replace("dark:bg-purple-500", "dark:bg-[#1f1f1f]");
+      this.invBtn.classList.replace("bg-purple-500", "bg-gray-300");
+      sciBtns.currnetType = "hyp";
+    }
   }
 }
 class State {
@@ -75,16 +181,17 @@ class State {
     this.instCalculation = document.getElementById("preData");
     this.btns = Array.from(document.querySelectorAll(".st-btn"));
     this.hist = document.getElementById("histItems");
-    this.dataValid = "123456789+-*×÷/0.()^%√";
-    this.vldTouchBtns = "1234567890+-×÷.%^√";
+    this.dataValid = "123456789+-*×÷/0.()^%√!";
+    this.vldTouchBtns = "1234567890+-×÷.%^√!";
     this.oper = "+-*×÷/^.";
     this.result = 0;
     this.preValue = "";
     this.preSelection = 1;
+    this.key = "";
   }
   start() {
     this.touchBtnStart(this.btns);
-    this.input.addEventListener("keypress", (event) => {
+    this.input.addEventListener("keydown", (event) => {
       this.preSelection = this.input.selectionEnd;
       if (event.key == "(") {
         this.preValue =
@@ -94,6 +201,7 @@ class State {
         this.input.value = this.preValue;
         this.input.selectionEnd = this.preSelection;
       }
+      this.key = event.key;
       if (event.key == "Enter") {
         this.updateHist(this.result);
         this.preValue = this.result;
@@ -128,33 +236,49 @@ class State {
   }
   touchInputValidater(pvalue, pselection, btnContent) {
     let value = this.input.value;
-    let curntSelection = pselection; console.log(btnContent)
+    let curntSelection = pselection;
+    btnContent = btnContent.trim();
+    let currnetType = this.ui.sciBtns.currnetType;
+    let sciIndex = this.ui.sciBtns[currnetType].indexOf(btnContent);
     if (this.vldTouchBtns.includes(btnContent)) {
       value =
         value.slice(0, pselection) +
         btnContent +
         value.slice(pselection, value.length);
       curntSelection += 1;
-    } else if (btnContent.trim() == "( )") {
+    } else if (btnContent == "⌫" && pselection != 0) {
+      value =
+        value.slice(0, pselection - 1) + value.slice(pselection, value.length);
+      curntSelection -= 1;
+    } else if (btnContent == "( )") {
       value =
         value.slice(0, pselection) +
         "()" +
         value.slice(pselection, value.length);
       curntSelection += 1;
-    } else if (btnContent == "←" && pselection != 0) {
-      value =
-        value.slice(0, pselection - 1) + value.slice(pselection, value.length);
-      curntSelection -= 1;
-    } else if (btnContent == "AC") {
+    }  else if (btnContent == "AC") {
       value = "";
       curntSelection = 0;
-    } else if (btnContent == "PI") {
+    } else if (btnContent == "π") {
       value =
         value.slice(0, pselection) +
-        "3.14" +
+        "3.142" +
         value.slice(pselection, value.length);
-      curntSelection += 4;
-    }
+      curntSelection += 5;
+    } else if (btnContent == "e") {
+      value =
+        value.slice(0, pselection) +
+        "2.718" +
+        value.slice(pselection, value.length);
+      curntSelection += 5;
+    } else if (sciIndex != -1) {
+      value =
+        value.slice(0, pselection) +
+        btnContent +
+        "()" +
+        value.slice(pselection, value.length);
+      curntSelection += btnContent.length + 1;
+    };
     this.input.value = value;
     this.input.selectionEnd = curntSelection;
     return this.opChecker(pvalue, curntSelection);
@@ -162,7 +286,9 @@ class State {
 
   validater(pvalue, pselection) {
     let input = this.input;
+    console.log(this.key);
     if (
+      this.key != "Backspace" &&
       !this.dataValid.includes(input.value[input.selectionEnd - 1]) &&
       input.value.length !== 0 &&
       input.selectionEnd != 0
@@ -201,12 +327,52 @@ class State {
   }
 
   praser() {
+
+    let replaceBtns = {
+      "sin": "Math.sin",
+      "cos": "Math.cos",
+      "tan": "Math.tan",
+      "csc": "1/Math.sin",
+      "sec": "1/Math.cos",
+      "cot": "1/Math.tan",
+    
+      "sin⁻¹": "Math.asin",
+      "cos⁻¹": "Math.acos",
+      "tan⁻¹": "Math.atan",
+      "csc⁻¹": "1/Math.asin",
+      "sec⁻¹": "1/Math.acos",
+      "cot⁻¹": "1/Math.atan",
+    
+      "sinh": "Math.sinh",
+      "cosh": "Math.cosh",
+      "tanh": "Math.tanh",
+      "csch": "1/Math.sinh",
+      "sech": "1/Math.cosh",
+      "coth": "1/Math.tanh",
+    
+      "sinh⁻¹": "Math.asinh",
+      "cosh⁻¹": "Math.acosh",
+      "tanh⁻¹": "Math.atanh",
+      "csch⁻¹": "1/Math.asinh",
+      "sech⁻¹": "1/Math.acosh",
+      "coth⁻¹": "1/Math.atanh",
+      "log": "Math.log10",
+      "ln" : "Math.log"
+    };
+    
     let value = this.input.value;
     value = value
       .replaceAll("×", "*")
       .replaceAll("÷", "/")
       .replaceAll("^", "**")
       .replaceAll("%", "/100");
+    
+    if (this.ui.displaying == "sci") {
+      for (let key of Object.keys(replaceBtns)) {
+        let test = new RegExp(key +"(?=\\()", "g")
+        value = value.replaceAll(test, replaceBtns[key]);
+      }
+    }
     console.log(value);
     try {
       let instResult = Number(eval(value));

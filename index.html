@@ -15,7 +15,9 @@
         >
           |||
         </button>
-        <h1 id="h1" class="inline text-2xl font-bold">Standard</h1>
+        <h1 id="h1" class="inline text-2xl font-bold">Scientific</h1>
+        <h2 id = "deg"
+         class="inline p-[.2rem_.3rem] hover:bg-gray-300 hover:dark:bg-gray-800 rounded-[4px]">DEG</h2>
         <div class="ml-auto pr-2">
           <button
             id="histBtn"
@@ -65,7 +67,7 @@
       ></textarea>
       <div
         id="stan"
-        class="absolute top-[40vh] left-[0vw] grid h-[60vh] w-[100vw] grid-cols-4 justify-items-stretch gap-1 p-[2vw] pb-2 md:w-[65vw] md:p-[.5rem_1rem_.5rem_1rem]"
+        class="absolute top-[40vh] left-[0vw] hidden h-[60vh] w-[100vw] grid-cols-4 justify-items-stretch gap-1 p-[2vw] pb-2 md:w-[65vw] md:p-[.5rem_1rem_.5rem_1rem] lg:p-[.5rem_1.3rem_.5rem_1.3rem]"
       >
         <button class="st-btn bg-blue-200 dark:bg-[#1f1f1f]">e</button>
         <button class="st-btn bg-blue-200 dark:bg-[#1f1f1f]">π</button>
@@ -96,29 +98,29 @@
       </div>
       <div
         id="sci"
-        class="absolute top-[40vh] left-[0vw] hidden h-[60vh] w-[100vw] grid-cols-5 justify-items-stretch gap-1 p-[2vw] pb-2 md:w-[65vw] md:p-[.5rem_1rem_.5rem_1rem]"
+        class="absolute top-[40vh] left-[0vw] grid h-[60vh] w-[100vw] grid-cols-5 justify-items-stretch gap-1 p-[2vw] pb-2 md:w-[65vw] md:p-[.5rem_1rem_.5rem_1rem]"
       >
-        <button class="st-btn bg-gray-300 text-[1rem] dark:bg-[#1f1f1f]">
+        <button id="inv" class="st-btn bg-gray-300 text-[1rem] dark:bg-[#1f1f1f]">
           INV
         </button>
-        <button class="st-btn bg-blue-100 text-[1rem] dark:bg-[#1f1f1f]">
+        <button class="st-btn cSci bg-blue-100 text-[1rem] dark:bg-[#1f1f1f]">
           sin
         </button>
-        <button class="st-btn bg-blue-100 text-[1rem] dark:bg-[#1f1f1f]">
+        <button class="cSci st-btn bg-blue-100 text-[1rem] dark:bg-[#1f1f1f]">
           cos
         </button>
-        <button class="st-btn bg-blue-100 text-[1rem] dark:bg-[#1f1f1f]">
+        <button class="cSci st-btn bg-blue-100 text-[1rem] dark:bg-[#1f1f1f]">
           tan
         </button>
         <button class="st-btn bg-blue-300 dark:bg-[#1f1f1f]">AC</button>
-        <button class="st-btn bg-gray-300 text-[1rem] dark:bg-[#1f1f1f]">
+        <button id="hyp" class="st-btn bg-gray-300 text-[1rem] dark:bg-[#1f1f1f]">
           hyp
         </button>
         <button class="st-btn bg-blue-200 dark:bg-[#1f1f1f]">e</button>
         <button class="st-btn bg-blue-200 dark:bg-[#1f1f1f]">π</button>
         <button class="st-btn bg-blue-200 dark:bg-[#1f1f1f]">√</button>
         <button class="st-btn bg-blue-200 dark:bg-[#1f1f1f]">^</button>
-        <button class="st-btn bg-blue-100 text-[1rem] dark:bg-[#1f1f1f]">
+        <button class="st-btn cSci bg-blue-100 text-[1rem] dark:bg-[#1f1f1f]">
           sec
         </button>
         <button class="st-btn bg-blue-200 text-xl dark:bg-[#1f1f1f]">!</button>
@@ -127,28 +129,28 @@
         </button>
         <button class="st-btn bg-blue-200 text-xl dark:bg-[#1f1f1f]">%</button>
         <button class="st-btn bg-blue-200 dark:bg-[#1f1f1f]">÷</button>
-        <button class="st-btn bg-blue-100 text-[1.5rem] dark:bg-[#1f1f1f]">
+        <button class="st-btn cSci bg-blue-100 text-[1rem] dark:bg-[#1f1f1f]">
           csc
         </button>
         <button class="st-btn">7</button>
         <button class="st-btn">8</button>
         <button class="st-btn">9</button>
         <button class="st-btn bg-blue-200 dark:bg-[#1f1f1f]">×</button>
-        <button class="st-btn bg-blue-100 text-[1rem] dark:bg-[#1f1f1f]">
+        <button class="st-btn cSci bg-blue-100 text-[1rem] dark:bg-[#1f1f1f]">
           cot
         </button>
         <button class="st-btn">4</button>
         <button class="st-btn">5</button>
         <button class="st-btn">6</button>
         <button class="st-btn bg-blue-200 dark:bg-[#1f1f1f]">+</button>
-        <button class="st-btn bg-blue-100 text-[1rem] dark:bg-[#1f1f1f]">
+        <button class="st-btn cSci bg-blue-100 text-[1rem] dark:bg-[#1f1f1f]">
           ln
         </button>
         <button class="st-btn">1</button>
         <button class="st-btn">2</button>
         <button class="st-btn">3</button>
         <button class="st-btn bg-blue-200 dark:bg-[#1f1f1f]">-</button>
-        <button class="st-btn bg-blue-200 text-[1rem] dark:bg-[#1f1f1f]">
+        <button class="st-btn cSci bg-blue-200 text-[1rem] dark:bg-[#1f1f1f]">
           log
         </button>
         <button class="st-btn">.</button>
