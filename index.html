@@ -11,7 +11,7 @@
       <div class="flex items-center gap-2">
         <button
           id="togBtn"
-          class="relative left-1 z-20 ml-2 rotate-90 rounded-[5px] p-2 text-2xl hover:bg-gray-300 dark:text-amber-50 dark:hover:bg-gray-800"
+          class="relative left-1 z-20 ml-2 rotate-90 rounded-[5px] p-2 text-2xl hover:bg-purple-300 dark:text-amber-50 dark:hover:bg-gray-800"
         >
           |||
         </button>
@@ -50,19 +50,19 @@
       </div>
       <div
         id="mlist"
-        class="absolute top-0 left-[-50vw] z-10 w-[50vw] rounded-xl border-r border-b border-purple-500 bg-[#e5d3fb] p-2 pb-4 transition-[left] duration-100 md:w-[40vw] dark:border-gray-950 dark:bg-[#090909]"
+        class="absolute select-none top-0 left-[-52vw] z-10 w-[50vw] rounded-xl  shadow-md shadow-purple-500 dark:shadow-purple-900 bg-gray-300 p-2 pb-4 transition-[left] duration-200 md:w-[40vw] dark:border-gray-950 dark:bg-[#090909]"
       >
         <h2 class="mt-[2rem] pl-2 text-[1.5rem] font-bold">Calculator</h2>
         <ul class="p-4 pt-1">
           <li
             id="btnStan"
-            class="nav-list mb-2 border border-purple-300 bg-purple-200 dark:bg-[#090909]"
+            class="nav-list mb-2 border border-gray-300 dark:border-purple-950 bg-gray-100  dark:bg-[#090909]"
           >
             Standard
           </li>
           <li
             id="btnSci"
-            class="nav-list mb-2 border border-purple-300 bg-purple-400 dark:bg-purple-900"
+            class="nav-list mb-2 border border-gray-300 bg-purple-400 dark:border-purple-950 dark:bg-purple-900"
           >
             Scientific
           </li>
@@ -92,7 +92,7 @@
       ></textarea>
       <div
         id="stan"
-        class="absolute top-[40%] left-[0vw] hidden h-[60%] w-[100vw] grid-cols-4 justify-items-stretch gap-1 p-[2vw] pb-2 md:w-[65vw] md:p-[.5rem_1rem_.5rem_1rem] lg:p-[.5rem_1.3rem_.5rem_1.3rem]"
+        class="absolute select-none top-[40%] left-[0vw] hidden h-[60%] w-[100vw] grid-cols-4 justify-items-stretch gap-1 p-[2vw] pb-2 md:w-[65vw] md:p-[.5rem_1rem_.5rem_1rem] lg:p-[.5rem_1.3rem_.5rem_1.3rem]"
       >
         <button class="st-btn bg-blue-200 dark:bg-[#1f3d44]">e</button>
         <button class="st-btn bg-blue-200 dark:bg-[#1d3d44]">π</button>
@@ -123,11 +123,11 @@
       </div>
       <div
         id="sci"
-        class="absolute top-[40%] left-[0vw] grid h-[60%] w-[100vw] grid-cols-5 justify-items-stretch gap-1 p-[2vw] pb-2 md:w-[65vw] md:p-[.5rem_1rem_.5rem_1rem]"
+        class="absolute select-none top-[40%] left-[0vw] grid h-[60%] w-[100vw] grid-cols-5 justify-items-stretch gap-1 p-[2vw] pb-2 md:w-[65vw] md:p-[.5rem_1rem_.5rem_1rem]"
       >
         <button
           id="inv"
-          class="st-btn bg-gray-300 text-[1rem] dark:bg-[#1f1f1f]"
+          class="st-btn active:rounded-full bg-gray-300 text-[1rem] dark:bg-[#1f1f1f]"
         >
           INV
         </button>
@@ -143,7 +143,7 @@
         <button class="st-btn bg-blue-300 dark:bg-[#1d3d44]">AC</button>
         <button
           id="hyp"
-          class="st-btn bg-gray-300 text-[1rem] dark:bg-[#1f1f1f]"
+          class="st-btn active:rounded-full bg-gray-300 text-[1rem] dark:bg-[#1f1f1f]"
         >
           hyp
         </button>

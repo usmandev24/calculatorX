@@ -55,9 +55,9 @@ class Interface {
       this.deg.classList.replace("inline", "hidden");
       this.displaying = "stan";
       this.h1.textContent = "Standard";
-      this.mBtnSci.classList.replace("bg-purple-400", "bg-purple-200")
+      this.mBtnSci.classList.replace("bg-purple-400", "bg-gray-100")
       this.mBtnSci.classList.replace("dark:bg-purple-900", "dark:bg-[#090909]");
-      this.mBtnStan.classList.replace("bg-purple-200", "bg-purple-400")
+      this.mBtnStan.classList.replace("bg-gray-100", "bg-purple-400")
       this.mBtnStan.classList.replace("dark:bg-[#090909]", "dark:bg-purple-900");
     }
   }
@@ -68,22 +68,22 @@ class Interface {
       this.displaying = "sci";
       this.h1.textContent = "Scientific";
       this.deg.classList.replace("hidden", "inline");
-      this.mBtnStan.classList.replace("bg-purple-400", "bg-purple-200");
+      this.mBtnStan.classList.replace("bg-purple-400", "bg-gray-100");
       this.mBtnStan.classList.replace("dark:bg-purple-900", "dark:bg-[#090909]");
-      this.mBtnSci.classList.replace("bg-purple-200", "bg-purple-400");
+      this.mBtnSci.classList.replace("bg-gray-100", "bg-purple-400");
       this.mBtnSci.classList.replace("dark:bg-[#090909]", "dark:bg-purple-900");
       
     }
   }
   showHideManue(event) {
     if (!this.mshow) {
-      this.mlist.classList.remove("left-[-50vw]");
+      this.mlist.classList.remove("left-[-52vw]");
       this.mlist.classList.add("left-[0vw]");
 
       this.mshow = true;
     } else {
       this.mlist.classList.remove("left-[0vw]");
-      this.mlist.classList.add("left-[-50vw]");
+      this.mlist.classList.add("left-[-52vw]");
       this.mshow = false;
     }
     event.stopPropagation();
@@ -124,7 +124,7 @@ class Interface {
         btn.textContent = sciBtns.hyp[i];
         i += 1;
       }
-      this.hypBtn.classList.replace("bg-gray-300", "bg-purple-500");
+      this.hypBtn.classList.replace("bg-gray-100", "bg-purple-500");
       this.hypBtn.classList.replace("dark:bg-[#1f1f1f]", "dark:bg-purple-500");
       sciBtns.currnetType = "hyp";
     } else if (sciBtns.currnetType == "inv") {
@@ -132,7 +132,7 @@ class Interface {
         btn.textContent = sciBtns.hypInv[i];
         i += 1;
       }
-      this.hypBtn.classList.replace("bg-gray-300", "bg-purple-500");
+      this.hypBtn.classList.replace("bg-gray-100", "bg-purple-500");
       this.hypBtn.classList.replace("dark:bg-[#1f1f1f]", "dark:bg-purple-500");
       sciBtns.currnetType = "hypInv";
     } else if (sciBtns.currnetType == "hyp") {
@@ -141,7 +141,7 @@ class Interface {
         i += 1;
       }
       this.hypBtn.classList.replace("dark:bg-purple-500", "dark:bg-[#1f1f1f]");
-      this.hypBtn.classList.replace("bg-purple-500", "bg-gray-300");
+      this.hypBtn.classList.replace("bg-purple-500", "bg-gray-100");
       sciBtns.currnetType = "default";
     } else if (sciBtns.currnetType == "hypInv") {
       for (let btn of this.allSciBtnsNode) {
@@ -149,7 +149,7 @@ class Interface {
         i += 1;
       }
       this.hypBtn.classList.replace("dark:bg-purple-500", "dark:bg-[#1f1f1f]");
-      this.hypBtn.classList.replace("bg-purple-500", "bg-gray-300");
+      this.hypBtn.classList.replace("bg-purple-500", "bg-gray-100");
       sciBtns.currnetType = "inv";
     }
   }
@@ -161,7 +161,7 @@ class Interface {
         btn.textContent = sciBtns.inv[i];
         i += 1;
       }
-      this.invBtn.classList.replace("bg-gray-300", "bg-purple-500");
+      this.invBtn.classList.replace("bg-gray-100", "bg-purple-500");
       this.invBtn.classList.replace("dark:bg-[#1f1f1f]", "dark:bg-purple-500");
       sciBtns.currnetType = "inv";
     } else if (sciBtns.currnetType == "hyp") {
@@ -169,7 +169,7 @@ class Interface {
         btn.textContent = sciBtns.hypInv[i];
         i += 1;
       }
-      this.invBtn.classList.replace("bg-gray-300", "bg-purple-500");
+      this.invBtn.classList.replace("bg-gray-100", "bg-purple-500");
       this.invBtn.classList.replace("dark:bg-[#1f1f1f]", "dark:bg-purple-500");
       sciBtns.currnetType = "hypInv";
     } else if (sciBtns.currnetType == "inv") {
@@ -178,7 +178,7 @@ class Interface {
         i += 1;
       }
       this.invBtn.classList.replace("dark:bg-purple-500", "dark:bg-[#1f1f1f]");
-      this.invBtn.classList.replace("bg-purple-500", "bg-gray-300");
+      this.invBtn.classList.replace("bg-purple-500", "bg-gray-100");
       sciBtns.currnetType = "default";
     } else if (sciBtns.currnetType == "hypInv") {
       for (let btn of this.allSciBtnsNode) {
@@ -186,7 +186,7 @@ class Interface {
         i += 1;
       }
       this.invBtn.classList.replace("dark:bg-purple-500", "dark:bg-[#1f1f1f]");
-      this.invBtn.classList.replace("bg-purple-500", "bg-gray-300");
+      this.invBtn.classList.replace("bg-purple-500", "bg-gray-100");
       sciBtns.currnetType = "hyp";
     }
   }

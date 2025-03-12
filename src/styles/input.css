@@ -6,7 +6,7 @@
     @apply hover:bg-purple-300 text-[1.3rem] hover:dark:bg-gray-700 p-1 mt-1 rounded-[5px]
   }
   .st-btn {
-    @apply text-2xl bg-gray-100 dark:bg-[#302f2f] rounded-full  active:scale-90 md:active:scale-95
+    @apply text-2xl bg-gray-100 dark:bg-[#302f2f] rounded-full  active:rounded-[0.5rem]
   }
 }
 
