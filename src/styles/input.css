@@ -1,6 +1,7 @@
 @import "tailwindcss" source(none);
 @source "../../index.html";
 @source "../app.js";
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 @layer components {
   .nav-list {
     @apply hover:bg-purple-300 text-[1.3rem] hover:dark:bg-gray-700 p-1 mt-1 rounded-[5px]

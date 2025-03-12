@@ -1,5 +1,6 @@
 class Interface {
   constructor() {
+    this.html = document.querySelector("html");
     this.h1 = document.getElementById("h1");
     this.togBtn = document.getElementById("togBtn");
     this.mlist = document.getElementById("mlist");
@@ -30,6 +31,7 @@ class Interface {
     };
     this.hypBtn = document.getElementById("hyp");
     this.invBtn = document.getElementById("inv");
+    this.themeBtn = document.getElementById("changeTheme")
     this.displaying = "sci";
     this.mshow = false;
     this.histShow = false;
@@ -46,7 +48,19 @@ class Interface {
     this.hypBtn.addEventListener("click", () => this.hypSwitch());
     this.invBtn.addEventListener("click", () => this.invSwitch());
     window.addEventListener("click", (event) => this.hideSide(event));
-    let stopTestslection = [this.stanDiv, this.sciDiv, this.mlist];
+    this.themeBtn.onclick = () => this.changeTheme();
+  }
+  changeTheme() {
+    let curnt = this.html.getAttribute("data-theme"); console.log(curnt)
+    if (curnt == "dark") {
+      this.html.setAttribute("data-theme", "light");
+      localStorage.setItem("theme", "light")
+      this.themeBtn.textContent = "🔆";
+    } else {
+      this.html.setAttribute("data-theme", "dark");
+      localStorage.setItem("theme", "dark");
+      this.themeBtn.textContent = "🌙";
+    }
   }
   showStnDiv() {
     if (this.displaying == "sci") {
@@ -59,6 +73,7 @@ class Interface {
       this.mBtnSci.classList.replace("dark:bg-purple-900", "dark:bg-[#090909]");
       this.mBtnStan.classList.replace("bg-gray-100", "bg-purple-400")
       this.mBtnStan.classList.replace("dark:bg-[#090909]", "dark:bg-purple-900");
+      localStorage.setItem("scheme", "stan");
     }
   }
   showSciDiv() {
@@ -72,6 +87,7 @@ class Interface {
       this.mBtnStan.classList.replace("dark:bg-purple-900", "dark:bg-[#090909]");
       this.mBtnSci.classList.replace("bg-gray-100", "bg-purple-400");
       this.mBtnSci.classList.replace("dark:bg-[#090909]", "dark:bg-purple-900");
+      localStorage.setItem("scheme", "sci")
       
     }
   }
@@ -465,9 +481,36 @@ function factorial(num) {
   }
   return 1;
 }
+ function setTheme (html, themeBtn) {
+  if (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+    html.setAttribute("data-theme", "dark")
+    themeBtn.textContent = "🌙";
+  } else if (!("theme" in localStorage) ){
+    html.setAttribute("data-theme", "light")
+    themeBtn.textContent = "🔆";
+  } else {
+    html.setAttribute("data-theme", `${localStorage.getItem("theme")}`);
+    if (localStorage.getItem("theme") == "light")themeBtn.textContent = "🔆";
+    else 
+    themeBtn.textContent = "🌙";
+  }
+ }
+ function setScheme (interface) {
+  if (!("scheme" in localStorage)) {
+    interface.showSciDiv();
+  } else if (localStorage.getItem("scheme") == "stan") {
+    interface.showStnDiv()
+  } else {
+    interface.showSciDiv();
+  }
+ }
 function main() {
-  let interface = new Interface();
+  let interface = new Interface(); interface.sh
+  setTheme(interface.html, interface.themeBtn);
+  setScheme(interface);
+  interface.sw
   interface.setEvents();
+
   let state = new State(interface);
   state.start();
 }
