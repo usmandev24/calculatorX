@@ -6,7 +6,7 @@
     <title>Calculator</title>
   </head>
 
-  <body class="bg-white dark:bg-[#161616] dark:text-white">
+  <body class="bg-white dark:bg-[#161616] h-body dark:text-white">
     <nav class="">
       <div class="flex items-center gap-2">
         <button
@@ -31,13 +31,13 @@
           </button>
           <div
             id="hist"
-            class="fixed top-0 right-[-80vw] z-8 h-auto max-h-[80vh] w-[80vw]  overflow-y-auto rounded-[.5rem] bg-gray-300 p-4 opacity-90 transition-[right] duration-100 md:top-0 md:left-[65vw] md:block md:h-[100vh] md:max-h-[100vh] md:w-[35vw] sm:w-[65vw] md:opacity-100 dark:bg-[#000]"
+            class="fixed top-0 right-[-80vw] z-8 h-auto max-h-[80vh] w-[80vw]  overflow-y-auto rounded-[.5rem] bg-gray-300 p-4 opacity-90 transition-[right] duration-100 md:top-0 md:left-[65vw] md:block md:h-[100vh] md:max-h-[100vh] md:w-[35vw] sm:w-[65vw] md:opacity-100 dark:bg-[#100707]"
           >
             <div class="flex justify-between">
               <h2 class="text-[1.2rem] font-bold md:text-xl">
                 Calculation History
               </h2>
-              <button id="closeHist" class="rounded-[5px] bg-purple-500 p-2 pt-1 pb-1 text-[1.1rem] dark:bg-gray-800">
+              <button id="closeHist" class="rounded-[5px] bg-purple-500 p-2 pt-1 pb-1 text-[1.1rem] md:hidden dark:bg-gray-800">
                 close
               </button>
             </div>
@@ -49,62 +49,61 @@
       </div>
       <div
         id="mlist"
-        class="absolute top-0 left-[-50vw] z-10 w-[50vw] rounded-xl border border-gray-300 dark:border-gray-950 bg-purple-200 p-2 transition-[left] duration-100 md:w-[40vw] dark:bg-[#000]"
+        class="absolute top-0 left-[-50vw] z-10 w-[50vw] pb-4 rounded-xl border border-gray-300 dark:border-gray-950 bg-[#ecffec] p-2 transition-[left] duration-100 md:w-[40vw] dark:bg-[#090909]"
       >
-        <h2 class="mt-[2rem] text-[1.4rem] font-bold">Calculator</h2>
+        <h2 class="mt-[2rem] text-[1.5rem] font-bold">Calculator</h2>
         <ul class="p-4 pt-1">
-          <li id="btnStan" class="nav-list">
+          <li id="btnStan" class="nav-list border mb-2 border-gray-400">
             Standard
-            <hr />
           </li>
-          <li id="btnSci" class="nav-list">
+          <li id="btnSci" class="nav-list border mb-2 border-gray-400">
             Scientific
-            <hr />
           </li>
-          <li class="nav-list mt-2">GitHub</li>
-          <li class="nav-list">About</li>
-          <li class="nav-list">Email</li>
+          <li class="nav-list mt-2">
+            <a href="https://github.com/usmandev24/calculatorX" target="_blank">GitHub</a></li>
+          <li class="nav-list"><a href="https://github.com/usmandev24" target="_blank">About</a></li>
+          <li class="nav-list"><a href="mailto:usman.dev24@gmail.com" target="_blank">Email</a></li>
         </ul>
       </div>
     </nav>
     <div id="body">
       <div
         id="instCal"
-        class="absolute m-[2vw] mt-0  text-2xl text-green-600 top-[12vh] left-[2vw] h-[5vh] w-[90vw] max-w-[90vw] pl-1 md:w-[60vw]"
+        class="absolute m-[2vw] mt-0  text-2xl text-green-600 top-[12%] left-[2vw] h-[5%] w-[90vw] max-w-[90vw] pl-1 md:w-[60vw]"
       >
         
       </div>
       <textarea
         inputmode="none"
         placeholder="0"
-        class="absolute top-[20vh] left-[0vw] m-[2vw] mt-0 h-[20vh] w-[96vw] resize-none rounded-2xl bg-purple-50 p-2 pr-4 pl-4 text-[1.5rem] outline-0 md:w-[61vw] dark:bg-gray-800"
+        class="absolute top-[20%] left-[0vw] m-[2vw] mt-0 h-[20%] w-[96vw] resize-none rounded-2xl bg-purple-50 p-2 pr-4 pl-4 text-[2rem] outline-0 md:w-[61vw] dark:bg-gray-800"
       ></textarea>
       <div
         id="stan"
-        class="absolute top-[40vh] left-[0vw] hidden h-[60vh] w-[100vw] grid-cols-4 justify-items-stretch gap-1 p-[2vw] pb-2 md:w-[65vw] md:p-[.5rem_1rem_.5rem_1rem] lg:p-[.5rem_1.3rem_.5rem_1.3rem]"
+        class="absolute top-[40%] left-[0vw] hidden  h-[60%] w-[100vw] grid-cols-4 justify-items-stretch gap-1 p-[2vw] pb-2 md:w-[65vw] md:p-[.5rem_1rem_.5rem_1rem] lg:p-[.5rem_1.3rem_.5rem_1.3rem]"
       >
-        <button class="st-btn bg-blue-200 dark:bg-[#1f1f1f]">e</button>
-        <button class="st-btn bg-blue-200 dark:bg-[#1f1f1f]">π</button>
-        <button class="st-btn bg-blue-200 dark:bg-[#1f1f1f]">√</button>
-        <button class="st-btn bg-blue-300 dark:bg-[#1f1f1f]">AC</button>
-        <button class="st-btn bg-blue-200 text-xl dark:bg-[#1f1f1f]">^</button>
-        <button class="st-btn bg-blue-200 text-xl dark:bg-[#1f1f1f]">
+        <button class="st-btn bg-blue-200 dark:bg-[#1f3d44]">e</button>
+        <button class="st-btn bg-blue-200 dark:bg-[#1d3d44]">π</button>
+        <button class="st-btn bg-blue-200 dark:bg-[#1d3d44]">√</button>
+        <button class="st-btn bg-blue-300 dark:bg-[#1d3d44]">AC</button>
+        <button class="st-btn bg-blue-200 text-xl dark:bg-[#1d3d44]">^</button>
+        <button class="st-btn bg-blue-200 text-xl dark:bg-[#1d3d44]">
           ( )
         </button>
-        <button class="st-btn bg-blue-200 text-xl dark:bg-[#1f1f1f]">%</button>
-        <button class="st-btn bg-blue-200 dark:bg-[#1f1f1f]">÷</button>
+        <button class="st-btn bg-blue-200 text-xl dark:bg-[#1d3d44]">%</button>
+        <button class="st-btn bg-blue-200 dark:bg-[#1d3d44]">÷</button>
         <button class="st-btn">7</button>
         <button class="st-btn">8</button>
         <button class="st-btn">9</button>
-        <button class="st-btn bg-blue-200 dark:bg-[#1f1f1f]">×</button>
+        <button class="st-btn bg-blue-200 dark:bg-[#1d3d44]">×</button>
         <button class="st-btn">4</button>
         <button class="st-btn">5</button>
         <button class="st-btn">6</button>
-        <button class="st-btn bg-blue-200 dark:bg-[#1f1f1f]">+</button>
+        <button class="st-btn bg-blue-200 dark:bg-[#1d3d44]">+</button>
         <button class="st-btn">1</button>
         <button class="st-btn">2</button>
         <button class="st-btn">3</button>
-        <button class="st-btn bg-blue-200 dark:bg-[#1f1f1f]">-</button>
+        <button class="st-btn bg-blue-200 dark:bg-[#1d3d44]">-</button>
         <button class="st-btn">.</button>
         <button class="st-btn">0</button>
         <button class="st-btn bg-red-200 text-[1rem] dark:bg-black">⌫</button>
@@ -112,7 +111,7 @@
       </div>
       <div
         id="sci"
-        class="absolute top-[40vh] left-[0vw] grid h-[60vh] w-[100vw] grid-cols-5 justify-items-stretch gap-1 p-[2vw] pb-2 md:w-[65vw] md:p-[.5rem_1rem_.5rem_1rem]"
+        class="absolute top-[40%] left-[0vw] grid h-[60%] w-[100vw] grid-cols-5 justify-items-stretch gap-1 p-[2vw] pb-2 md:w-[65vw] md:p-[.5rem_1rem_.5rem_1rem]"
       >
         <button
           id="inv"
@@ -120,57 +119,57 @@
         >
           INV
         </button>
-        <button class="st-btn cSci bg-blue-100 text-[1rem] dark:bg-[#1f1f1f]">
+        <button class="st-btn cSci bg-blue-100 text-[1rem] dark:bg-[#111f23]">
           sin
         </button>
-        <button class="cSci st-btn bg-blue-100 text-[1rem] dark:bg-[#1f1f1f]">
+        <button class="cSci st-btn bg-blue-100 text-[1rem] dark:bg-[#111f23]">
           cos
         </button>
-        <button class="cSci st-btn bg-blue-100 text-[1rem] dark:bg-[#1f1f1f]">
+        <button class="cSci st-btn bg-blue-100 text-[1rem] dark:bg-[#111f23]">
           tan
         </button>
-        <button class="st-btn bg-blue-300 dark:bg-[#1f1f1f]">AC</button>
+        <button class="st-btn bg-blue-300 dark:bg-[#1d3d44]">AC</button>
         <button
           id="hyp"
           class="st-btn bg-gray-300 text-[1rem] dark:bg-[#1f1f1f]"
         >
           hyp
         </button>
-        <button class="st-btn bg-blue-200 dark:bg-[#1f1f1f]">e</button>
-        <button class="st-btn bg-blue-200 dark:bg-[#1f1f1f]">π</button>
-        <button class="st-btn bg-blue-200 dark:bg-[#1f1f1f]">√</button>
-        <button class="st-btn bg-blue-200 dark:bg-[#1f1f1f]">^</button>
-        <button class="st-btn cSci bg-blue-100 text-[1rem] dark:bg-[#1f1f1f]">
+        <button class="st-btn bg-blue-200 dark:bg-[#1d3d44]">e</button>
+        <button class="st-btn bg-blue-200 dark:bg-[#1d3d44]">π</button>
+        <button class="st-btn bg-blue-200 dark:bg-[#1d3d44]">√</button>
+        <button class="st-btn bg-blue-200 dark:bg-[#1d3d44]">^</button>
+        <button class="st-btn cSci bg-blue-100 text-[1rem] dark:bg-[#111f23]">
           csc
         </button>
-        <button class="st-btn bg-blue-200 text-xl dark:bg-[#1f1f1f]">!</button>
-        <button class="st-btn bg-blue-200 text-xl dark:bg-[#1f1f1f]">
+        <button class="st-btn bg-blue-200 text-xl dark:bg-[#1d3d44]">!</button>
+        <button class="st-btn bg-blue-200 text-xl dark:bg-[#1d3d44]">
           ( )
         </button>
-        <button class="st-btn bg-blue-200 text-xl dark:bg-[#1f1f1f]">%</button>
-        <button class="st-btn bg-blue-200 dark:bg-[#1f1f1f]">÷</button>
-        <button class="st-btn cSci bg-blue-100 text-[1rem] dark:bg-[#1f1f1f]">
+        <button class="st-btn bg-blue-200 text-xl dark:bg-[#1d3d44]">%</button>
+        <button class="st-btn bg-blue-200 dark:bg-[#1d3d44]">÷</button>
+        <button class="st-btn cSci bg-blue-100 text-[1rem] dark:bg-[#111f23]">
           sec
         </button>
         <button class="st-btn">7</button>
         <button class="st-btn">8</button>
         <button class="st-btn">9</button>
-        <button class="st-btn bg-blue-200 dark:bg-[#1f1f1f]">×</button>
-        <button class="st-btn cSci bg-blue-100 text-[1rem] dark:bg-[#1f1f1f]">
+        <button class="st-btn bg-blue-200 dark:bg-[#1d3d44]">×</button>
+        <button class="st-btn cSci bg-blue-100 text-[1rem] dark:bg-[#111f23]">
           cot
         </button>
         <button class="st-btn">4</button>
         <button class="st-btn">5</button>
         <button class="st-btn">6</button>
-        <button class="st-btn bg-blue-200 dark:bg-[#1f1f1f]">+</button>
-        <button class="st-btn cSci bg-blue-100 text-[1rem] dark:bg-[#1f1f1f]">
+        <button class="st-btn bg-blue-200 dark:bg-[#1d3d44]">+</button>
+        <button class="st-btn cSci bg-blue-100 text-[1rem] dark:bg-[#111f23]">
           ln
         </button>
         <button class="st-btn">1</button>
         <button class="st-btn">2</button>
         <button class="st-btn">3</button>
-        <button class="st-btn bg-blue-200 dark:bg-[#1f1f1f]">-</button>
-        <button class="st-btn cSci bg-blue-100 text-[1rem] dark:bg-[#1f1f1f]">
+        <button class="st-btn bg-blue-200 dark:bg-[#1d3d44]">-</button>
+        <button class="st-btn cSci bg-blue-100 text-[1rem] dark:bg-[#111f23]">
           log
         </button>
         <button class="st-btn">.</button>
