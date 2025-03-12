@@ -772,6 +772,11 @@
       color: var(--color-white);
     }
   }
+  .dark\:opacity-85 {
+    &:where([data-theme=dark], [data-theme=dark] *) {
+      opacity: 85%;
+    }
+  }
   .dark\:opacity-90 {
     &:where([data-theme=dark], [data-theme=dark] *) {
       opacity: 90%;
