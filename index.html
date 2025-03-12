@@ -6,7 +6,7 @@
     <title>Calculator</title>
   </head>
 
-  <body class="bg-white dark:bg-[#161616] h-body dark:text-white">
+  <body class=" bg-white dark:bg-[#161616] dark:text-white">
     <nav class="">
       <div class="flex items-center gap-2">
         <button
@@ -15,64 +15,76 @@
         >
           |||
         </button>
-        <h1 id="h1" class="inline text-2xl font-bold pl-2">Scientific</h1>
+        <h1 id="h1" class="inline pl-2 text-2xl font-bold">Scientific</h1>
         <h2
           id="deg"
-          class="inline text-[.8rem] rounded-[4px] p-[.4rem_.2rem_0rem_.2rem]"
+          class="inline rounded-[4px] p-[.4rem_.2rem_0rem_.2rem] text-[.8rem]"
         >
           RAD
         </h2>
         <div class="ml-auto pr-2">
           <button
             id="histBtn"
-            class="rounded-[5px] bg-purple-200 p-1 dark:bg-gray-800"
+            class="rounded-[5px] bg-purple-300 p-1 dark:bg-gray-800"
           >
             History
           </button>
           <div
             id="hist"
-            class="fixed top-0 right-[-80vw] z-8 h-auto max-h-[80vh] w-[80vw]  overflow-y-auto rounded-[.5rem] bg-gray-300 p-4 opacity-90 transition-[right] duration-100 md:top-0 md:left-[65vw] md:block md:h-[100vh] md:max-h-[100vh] md:w-[35vw] sm:w-[65vw] md:opacity-100 dark:bg-[#100707]"
+            class="fixed top-0 right-[-80vw] z-8 h-auto max-h-[80vh] w-[80vw] overflow-y-auto rounded-[.5rem] bg-gray-300 p-4 opacity-90 transition-[right] duration-100 sm:w-[65vw] md:top-0 md:left-[65vw] md:block md:h-[100vh] md:max-h-[100vh] md:w-[35vw] md:opacity-100 dark:bg-[#100707]"
           >
             <div class="flex justify-between">
               <h2 class="text-[1.2rem] font-bold md:text-xl">
                 Calculation History
               </h2>
-              <button id="closeHist" class="rounded-[5px] bg-purple-500 p-2 pt-1 pb-1 text-[1.1rem] md:hidden dark:bg-gray-800">
+              <button
+                id="closeHist"
+                class="rounded-[5px] bg-purple-500 p-2 pt-1 pb-1 text-[1.1rem] md:hidden dark:bg-gray-800"
+              >
                 close
               </button>
             </div>
-            <div id="histItems" class="p-2">
-
-            </div>
+            <div id="histItems" class="p-2"></div>
           </div>
         </div>
       </div>
       <div
         id="mlist"
-        class="absolute top-0 left-[-50vw] z-10 w-[50vw] pb-4 rounded-xl border border-gray-300 dark:border-gray-950 bg-[#ecffec] p-2 transition-[left] duration-100 md:w-[40vw] dark:bg-[#090909]"
+        class="absolute top-0 left-[-50vw] z-10 w-[50vw] rounded-xl border-r border-b border-purple-500 bg-[#e5d3fb] p-2 pb-4 transition-[left] duration-100 md:w-[40vw] dark:border-gray-950 dark:bg-[#090909]"
       >
-        <h2 class="mt-[2rem] text-[1.5rem] font-bold">Calculator</h2>
+        <h2 class="mt-[2rem] pl-2 text-[1.5rem] font-bold">Calculator</h2>
         <ul class="p-4 pt-1">
-          <li id="btnStan" class="nav-list border mb-2 border-gray-400">
+          <li
+            id="btnStan"
+            class="nav-list mb-2 border border-purple-300 bg-purple-200 dark:bg-[#090909]"
+          >
             Standard
           </li>
-          <li id="btnSci" class="nav-list border mb-2 border-gray-400">
+          <li
+            id="btnSci"
+            class="nav-list mb-2 border border-purple-300 bg-purple-400 dark:bg-purple-900"
+          >
             Scientific
           </li>
           <li class="nav-list mt-2">
-            <a href="https://github.com/usmandev24/calculatorX" target="_blank">GitHub</a></li>
-          <li class="nav-list"><a href="https://github.com/usmandev24" target="_blank">About</a></li>
-          <li class="nav-list"><a href="mailto:usman.dev24@gmail.com" target="_blank">Email</a></li>
+            <a href="https://github.com/usmandev24/calculatorX" target="_blank"
+              >GitHub</a
+            >
+          </li>
+          <li class="nav-list">
+            <a href="https://github.com/usmandev24" target="_blank">About</a>
+          </li>
+          <li class="nav-list">
+            <a href="mailto:usman.dev24@gmail.com" target="_blank">Email</a>
+          </li>
         </ul>
       </div>
     </nav>
     <div id="body">
       <div
         id="instCal"
-        class="absolute m-[2vw] mt-0  text-2xl text-green-600 top-[12%] left-[2vw] h-[5%] w-[90vw] max-w-[90vw] pl-1 md:w-[60vw]"
-      >
-        
-      </div>
+        class="absolute top-[12%] left-[2vw] m-[2vw] mt-0 h-[5%] w-[90vw] max-w-[90vw] pl-1 text-[1.5rem] text-green-600 md:w-[60vw]"
+      ></div>
       <textarea
         inputmode="none"
         placeholder="0"
@@ -80,7 +92,7 @@
       ></textarea>
       <div
         id="stan"
-        class="absolute top-[40%] left-[0vw] hidden  h-[60%] w-[100vw] grid-cols-4 justify-items-stretch gap-1 p-[2vw] pb-2 md:w-[65vw] md:p-[.5rem_1rem_.5rem_1rem] lg:p-[.5rem_1.3rem_.5rem_1.3rem]"
+        class="absolute top-[40%] left-[0vw] hidden h-[60%] w-[100vw] grid-cols-4 justify-items-stretch gap-1 p-[2vw] pb-2 md:w-[65vw] md:p-[.5rem_1rem_.5rem_1rem] lg:p-[.5rem_1.3rem_.5rem_1.3rem]"
       >
         <button class="st-btn bg-blue-200 dark:bg-[#1f3d44]">e</button>
         <button class="st-btn bg-blue-200 dark:bg-[#1d3d44]">π</button>

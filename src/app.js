@@ -46,6 +46,7 @@ class Interface {
     this.hypBtn.addEventListener("click", () => this.hypSwitch());
     this.invBtn.addEventListener("click", () => this.invSwitch());
     window.addEventListener("click", (event) => this.hideSide(event));
+    let stopTestslection = [this.stanDiv, this.sciDiv, this.mlist];
   }
   showStnDiv() {
     if (this.displaying == "sci") {
@@ -54,6 +55,10 @@ class Interface {
       this.deg.classList.replace("inline", "hidden");
       this.displaying = "stan";
       this.h1.textContent = "Standard";
+      this.mBtnSci.classList.replace("bg-purple-400", "bg-purple-200")
+      this.mBtnSci.classList.replace("dark:bg-purple-900", "dark:bg-[#090909]");
+      this.mBtnStan.classList.replace("bg-purple-200", "bg-purple-400")
+      this.mBtnStan.classList.replace("dark:bg-[#090909]", "dark:bg-purple-900");
     }
   }
   showSciDiv() {
@@ -63,6 +68,11 @@ class Interface {
       this.displaying = "sci";
       this.h1.textContent = "Scientific";
       this.deg.classList.replace("hidden", "inline");
+      this.mBtnStan.classList.replace("bg-purple-400", "bg-purple-200");
+      this.mBtnStan.classList.replace("dark:bg-purple-900", "dark:bg-[#090909]");
+      this.mBtnSci.classList.replace("bg-purple-200", "bg-purple-400");
+      this.mBtnSci.classList.replace("dark:bg-[#090909]", "dark:bg-purple-900");
+      
     }
   }
   showHideManue(event) {
@@ -303,7 +313,6 @@ class State {
 
   validater(pvalue, pselection) {
     let input = this.input;
-    console.log(this.key);
     if (
       this.key != "Backspace" &&
       !this.dataValid.includes(input.value[input.selectionEnd - 1]) &&
@@ -414,7 +423,7 @@ class State {
   }
   updateInstResults(result) {
     this.instCalResult.textContent = "";
-    this.instCalResult.textContent = ` = ` + result;
+    this.instCalResult.textContent = ` =` + result;
   }
   updateHist(result) {
     let input = this.input;
