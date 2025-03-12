@@ -31,7 +31,8 @@ class Interface {
     };
     this.hypBtn = document.getElementById("hyp");
     this.invBtn = document.getElementById("inv");
-    this.themeBtn = document.getElementById("changeTheme")
+    this.themeBtn = document.getElementById("changeTheme");
+    this.memory = {};
     this.displaying = "sci";
     this.mshow = false;
     this.histShow = false;
@@ -88,7 +89,7 @@ class Interface {
       this.mBtnSci.classList.replace("bg-gray-100", "bg-purple-400");
       this.mBtnSci.classList.replace("dark:bg-[#090909]", "dark:bg-purple-900");
       localStorage.setItem("scheme", "sci")
-      
+
     }
   }
   showHideManue(event) {
@@ -116,10 +117,10 @@ class Interface {
     }
     event.stopPropagation();
   }
-  closeHist () {
+  closeHist() {
     this.hist.classList.replace("right-[0vw]", "right-[-80vw]");
-      this.histBtn.textContent = "History";
-      this.histShow = false;
+    this.histBtn.textContent = "History";
+    this.histShow = false;
   }
   hideSide(event) {
     if (this.histShow) {
@@ -140,7 +141,7 @@ class Interface {
         btn.textContent = sciBtns.hyp[i];
         i += 1;
       }
-      this.hypBtn.classList.replace("bg-gray-100", "bg-purple-500");
+      this.hypBtn.classList.replace("bg-gray-300", "bg-purple-500");
       this.hypBtn.classList.replace("dark:bg-[#1f1f1f]", "dark:bg-purple-500");
       sciBtns.currnetType = "hyp";
     } else if (sciBtns.currnetType == "inv") {
@@ -148,7 +149,7 @@ class Interface {
         btn.textContent = sciBtns.hypInv[i];
         i += 1;
       }
-      this.hypBtn.classList.replace("bg-gray-100", "bg-purple-500");
+      this.hypBtn.classList.replace("bg-gray-300", "bg-purple-500");
       this.hypBtn.classList.replace("dark:bg-[#1f1f1f]", "dark:bg-purple-500");
       sciBtns.currnetType = "hypInv";
     } else if (sciBtns.currnetType == "hyp") {
@@ -157,7 +158,7 @@ class Interface {
         i += 1;
       }
       this.hypBtn.classList.replace("dark:bg-purple-500", "dark:bg-[#1f1f1f]");
-      this.hypBtn.classList.replace("bg-purple-500", "bg-gray-100");
+      this.hypBtn.classList.replace("bg-purple-500", "bg-gray-300");
       sciBtns.currnetType = "default";
     } else if (sciBtns.currnetType == "hypInv") {
       for (let btn of this.allSciBtnsNode) {
@@ -165,7 +166,7 @@ class Interface {
         i += 1;
       }
       this.hypBtn.classList.replace("dark:bg-purple-500", "dark:bg-[#1f1f1f]");
-      this.hypBtn.classList.replace("bg-purple-500", "bg-gray-100");
+      this.hypBtn.classList.replace("bg-purple-500", "bg-gray-300");
       sciBtns.currnetType = "inv";
     }
   }
@@ -177,7 +178,7 @@ class Interface {
         btn.textContent = sciBtns.inv[i];
         i += 1;
       }
-      this.invBtn.classList.replace("bg-gray-100", "bg-purple-500");
+      this.invBtn.classList.replace("bg-gray-300", "bg-purple-500");
       this.invBtn.classList.replace("dark:bg-[#1f1f1f]", "dark:bg-purple-500");
       sciBtns.currnetType = "inv";
     } else if (sciBtns.currnetType == "hyp") {
@@ -185,7 +186,7 @@ class Interface {
         btn.textContent = sciBtns.hypInv[i];
         i += 1;
       }
-      this.invBtn.classList.replace("bg-gray-100", "bg-purple-500");
+      this.invBtn.classList.replace("bg-gray-300", "bg-purple-500");
       this.invBtn.classList.replace("dark:bg-[#1f1f1f]", "dark:bg-purple-500");
       sciBtns.currnetType = "hypInv";
     } else if (sciBtns.currnetType == "inv") {
@@ -194,7 +195,7 @@ class Interface {
         i += 1;
       }
       this.invBtn.classList.replace("dark:bg-purple-500", "dark:bg-[#1f1f1f]");
-      this.invBtn.classList.replace("bg-purple-500", "bg-gray-100");
+      this.invBtn.classList.replace("bg-purple-500", "bg-gray-300");
       sciBtns.currnetType = "default";
     } else if (sciBtns.currnetType == "hypInv") {
       for (let btn of this.allSciBtnsNode) {
@@ -202,7 +203,7 @@ class Interface {
         i += 1;
       }
       this.invBtn.classList.replace("dark:bg-purple-500", "dark:bg-[#1f1f1f]");
-      this.invBtn.classList.replace("bg-purple-500", "bg-gray-100");
+      this.invBtn.classList.replace("bg-purple-500", "bg-gray-300");
       sciBtns.currnetType = "hyp";
     }
   }
@@ -214,6 +215,7 @@ class State {
     this.instCalResult = document.getElementById("instCal");
     this.btns = Array.from(document.querySelectorAll(".st-btn"));
     this.hist = document.getElementById("histItems");
+    this.deletehBtn = document.getElementById("delete");
     this.dataValid = "123456789+-*×÷/0.()^%√!";
     this.vldTouchBtns = "1234567890+-×÷.%^!";
     this.oper = "+-*×÷/^.";
@@ -221,10 +223,20 @@ class State {
     this.preValue = "";
     this.preSelection = 1;
     this.key = "";
+    this.memory = Object.create(null);
+    this.date = new Date;
   }
   start() {
     this.touchBtnStart(this.btns);
     this.keyFunctionsStart();
+    this.deletehBtn.onclick = () => this.deleteHist();
+    let localStorageMemkey = this.date.getDate().toString();
+    if (localStorage.getItem(localStorageMemkey) == null) {
+      this.memory[this.date.getDate()] = Object.create(null);
+    } else {
+      this.memory[this.date.getDate()] = JSON.parse(localStorage.getItem(localStorageMemkey))
+    }
+
   }
   keyFunctionsStart() {
     this.input.addEventListener("keydown", (event) => {
@@ -412,7 +424,7 @@ class State {
     let factorials = value.match(/\d+!/g);
     if (factorials != null) {
       for (let tofac of factorials) {
-        let num = Number(tofac.slice(0, tofac.length-1))
+        let num = Number(tofac.slice(0, tofac.length - 1))
         value = value.replace(tofac, `${factorial(num)}`)
       }
     }
@@ -430,7 +442,7 @@ class State {
       if (instResult / Number(instResult.toFixed(0)) === 1) {
         return instResult;
       } else if (instResult / instResult != 1) {
-        return "?"
+        return "?";
       };
       return instResult.toFixed(3);
     } catch {
@@ -444,9 +456,9 @@ class State {
   updateHist(result) {
     let input = this.input;
     let item = document.createElement("p");
-    let resItem =document.createElement("span");
+    let resItem = document.createElement("span");
     resItem.classList.add("text-green-600", "text-[1.4rem]");
-    item.classList.add("p-2", "text-[1.2rem]");
+    item.classList.add("text-[1.2rem]");
     this.preValue = this.preValue
       .replaceAll("+", " + ")
       .replaceAll("-", " - ")
@@ -457,14 +469,18 @@ class State {
     item.appendChild(value);
     item.appendChild(resItem);
     this.hist.appendChild(item);
-    item.onclick =  () => {
-      input.value = value.textContent.slice(0, value.textContent.length-3);
+    this.memory[this.date.getDate()][`${result}`] = this.preValue;
+    localStorage.setItem(String(this.date.getDate()), JSON.stringify(this.memory[this.date.getDate()]));
+    console.log(this.memory[this.date.getDate()]);
+    console.log(JSON.stringify(this.memory[this.date.getDate()]))
+    item.onclick = () => {
+      input.value = value.textContent.slice(0, value.textContent.length - 3);
     }
     resItem.onclick = (event) => {
       input.value = resItem.textContent;
       event.stopPropagation();
     }
-    
+
   }
   setResults() {
     if (this.result !== "?") {
@@ -472,30 +488,91 @@ class State {
       this.preValue = this.result;
       this.input.value = this.result;
     }
-
+  }
+  deleteHist() {
+    let today = this.date.getDate();
+    let confirm = window.confirm(` " OK "  If you want to delete all History`);
+    if (!confirm) return;
+    for (let day = today - 6; day <= today; day += 1) {
+      if (day.toString() in localStorage)
+        localStorage.removeItem(day.toString());
+    }
+    let chidhist = Array.from(this.hist.children);
+    for (let value of chidhist) {
+      value.textContent = "";
+    };
   }
 }
 function factorial(num) {
   if (num > 1) {
-    return num * factorial(num-1)
+    return num * factorial(num - 1)
   }
   return 1;
 }
- function setTheme (html, themeBtn) {
+function setTheme(html, themeBtn) {
   if (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches) {
     html.setAttribute("data-theme", "dark")
     themeBtn.textContent = "🌙";
-  } else if (!("theme" in localStorage) ){
+  } else if (!("theme" in localStorage)) {
     html.setAttribute("data-theme", "light")
     themeBtn.textContent = "🔆";
   } else {
     html.setAttribute("data-theme", `${localStorage.getItem("theme")}`);
-    if (localStorage.getItem("theme") == "light")themeBtn.textContent = "🔆";
-    else 
-    themeBtn.textContent = "🌙";
+    if (localStorage.getItem("theme") == "light") themeBtn.textContent = "🔆";
+    else
+      themeBtn.textContent = "🌙";
   }
- }
- function setScheme (interface) {
+}
+function setHistory(date, input) {
+  let histItems = document.getElementById("histItems");
+  let hist;
+  let today = date.getDate(); console.log(today)
+  let cont = 6;
+  for (let day = today - 6; day <= today; day += 1) {
+    hist = localStorage.getItem(String(day));
+    if (cont > 5 && hist != null) {
+      localStorage.removeItem(String(day));
+    }
+    cont -= 1;
+    hist = JSON.parse(hist); console.log(hist);
+    if (hist != null) {
+      let results = Object.keys(hist);
+      let exps = Object.values(hist);
+      for (let i = results.length - 1; i >= 0; i -= 1) {
+        let item = document.createElement("p");
+        let resItem = document.createElement("span");
+        resItem.classList.add("text-green-600", "text-[1.4rem]");
+        item.classList.add("text-[1.2rem]");
+        let value = document.createTextNode(`${exps[i]} = `);
+        resItem.textContent = results[i];
+        item.appendChild(value);
+        item.appendChild(resItem);
+        histItems.appendChild(item);
+        item.onclick = () => {
+          input.value = value.textContent.slice(0, value.textContent.length - 3);
+        }
+        resItem.onclick = (event) => {
+          input.value = resItem.textContent;
+          event.stopPropagation();
+        }
+      }
+      if (day == today) {
+        let dayHeading = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
+        let dHdiv = document.createElement('div');
+        dHdiv.classList.add("inline-flex", "text-[.8rem]");
+        let clereBtn = document.createElement("btn");
+        let h = document.createElement("h3");
+        h.textContent = dayHeading;
+        h.classList.add("border-b", "mb-2", "mt-2")
+        clereBtn.textContent = "✕";
+        clereBtn.classList.add("ml-auto", "text-[1.3rem]", "ml-auto");
+        dHdiv.appendChild(h); dHdiv.appendChild(clereBtn);
+        histItems.appendChild(dHdiv);
+      }
+    }
+  }
+}
+function setScheme(interface) {
   if (!("scheme" in localStorage)) {
     interface.showSciDiv();
   } else if (localStorage.getItem("scheme") == "stan") {
@@ -503,15 +580,15 @@ function factorial(num) {
   } else {
     interface.showSciDiv();
   }
- }
+}
 function main() {
+
   let interface = new Interface(); interface.sh
   setTheme(interface.html, interface.themeBtn);
   setScheme(interface);
-  interface.sw
   interface.setEvents();
-
   let state = new State(interface);
+  setHistory(state.date, state.input);
   state.start();
 }
 window.addEventListener("load", () => main());
