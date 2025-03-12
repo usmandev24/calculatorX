@@ -897,10 +897,3 @@
   syntax: "*";
   inherits: false;
 }
- inherits: false;
-  initial-value: solid;
-}
-@property --tw-duration {
-  syntax: "*";
-  inherits: false;
-}
