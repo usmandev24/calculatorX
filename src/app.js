@@ -211,10 +211,11 @@ class Interface {
 class State {
   constructor(ui) {
     this.ui = ui;
+    this.date = new Date;
     this.input = document.querySelector("textarea");
     this.instCalResult = document.getElementById("instCal");
     this.btns = Array.from(document.querySelectorAll(".st-btn"));
-    this.hist = document.getElementById("histItems");
+    this.todayHist = document.getElementById("tHistItems");
     this.deletehBtn = document.getElementById("delete");
     this.dataValid = "123456789+-*×÷/0.()^%√!";
     this.vldTouchBtns = "1234567890+-×÷.%^!";
@@ -224,18 +225,19 @@ class State {
     this.preSelection = 1;
     this.key = "";
     this.memory = Object.create(null);
-    this.date = new Date;
   }
   start() {
     this.touchBtnStart(this.btns);
     this.keyFunctionsStart();
     this.deletehBtn.onclick = () => this.deleteHist();
-    let localStorageMemkey = this.date.getDate().toString();
-    if (localStorage.getItem(localStorageMemkey) == null) {
+    let todayDate = this.date.getDate().toString();
+    if (localStorage.getItem(todayDate) == null) {
       this.memory[this.date.getDate()] = Object.create(null);
     } else {
-      this.memory[this.date.getDate()] = JSON.parse(localStorage.getItem(localStorageMemkey))
+      this.memory[this.date.getDate()] = JSON.parse(localStorage.getItem(todayDate))
     }
+    let btnDeltHist = document.getElementById("deletetHist");
+    btnDeltHist.onclick = () => this.deleteTodayHist();
 
   }
   keyFunctionsStart() {
@@ -468,11 +470,8 @@ class State {
     resItem.textContent = result;
     item.appendChild(value);
     item.appendChild(resItem);
-    this.hist.appendChild(item);
-    this.memory[this.date.getDate()][`${result}`] = this.preValue;
-    localStorage.setItem(String(this.date.getDate()), JSON.stringify(this.memory[this.date.getDate()]));
-    console.log(this.memory[this.date.getDate()]);
-    console.log(JSON.stringify(this.memory[this.date.getDate()]))
+    this.todayHist.appendChild(item);
+    this.updtLocStrgHistObj(result);
     item.onclick = () => {
       input.value = value.textContent.slice(0, value.textContent.length - 3);
     }
@@ -481,6 +480,12 @@ class State {
       event.stopPropagation();
     }
 
+  }
+  updtLocStrgHistObj(result) {
+    let todayDate = this.date.getDate();
+    this.memory[todayDate][this.preValue] = String(result);
+    localStorage.setItem(String(todayDate), JSON.stringify(this.memory[todayDate]));
+    console.log(this.memory[todayDate]);
   }
   setResults() {
     if (this.result !== "?") {
@@ -493,14 +498,20 @@ class State {
     let today = this.date.getDate();
     let confirm = window.confirm(` " OK "  If you want to delete all History`);
     if (!confirm) return;
+    this.memory[today] = Object.create(null);
     for (let day = today - 6; day <= today; day += 1) {
       if (day.toString() in localStorage)
         localStorage.removeItem(day.toString());
     }
-    let chidhist = Array.from(this.hist.children);
-    for (let value of chidhist) {
-      value.textContent = "";
-    };
+    let histItems = document.getElementById("histItems");
+    this.todayHist.textContent = "";
+    histItems.textContent = ""
+  }
+  deleteTodayHist() {
+    let today = this.date.getDate();
+    this.todayHist.textContent = "";
+    this.memory[today] = Object.create(null);
+    localStorage.removeItem(String(today));
   }
 }
 function factorial(num) {
@@ -524,21 +535,30 @@ function setTheme(html, themeBtn) {
   }
 }
 function setHistory(date, input) {
-  let histItems = document.getElementById("histItems");
-  let hist;
+  let todayHist = document.getElementById("tHistItems");
+  let histObj;
   let today = date.getDate(); console.log(today)
   let cont = 6;
   for (let day = today - 6; day <= today; day += 1) {
-    hist = localStorage.getItem(String(day));
-    if (cont > 5 && hist != null) {
+    histObj = localStorage.getItem(String(day));
+    histObj = JSON.parse(histObj);
+
+    if (cont > 5 && histObj != null) {
       localStorage.removeItem(String(day));
     }
     cont -= 1;
-    hist = JSON.parse(hist); console.log(hist);
-    if (hist != null) {
-      let results = Object.keys(hist);
-      let exps = Object.values(hist);
-      for (let i = results.length - 1; i >= 0; i -= 1) {
+    if (histObj != null) {
+      let results = Object.values(histObj);
+      let exps = Object.keys(histObj);
+      let dayDiv = document.createElement("div");
+      
+      if (day != today) {
+        dayDiv.setAttribute("id", String(day));
+        dayDiv.classList.add("flex", "flex-col-reverse");
+      } else {
+        dayDiv = todayHist;
+      }
+      for (let i = 0; i <= results.length - 1; i += 1) {
         let item = document.createElement("p");
         let resItem = document.createElement("span");
         resItem.classList.add("text-green-600", "text-[1.4rem]");
@@ -547,7 +567,7 @@ function setHistory(date, input) {
         resItem.textContent = results[i];
         item.appendChild(value);
         item.appendChild(resItem);
-        histItems.appendChild(item);
+        dayDiv.appendChild(item)
         item.onclick = () => {
           input.value = value.textContent.slice(0, value.textContent.length - 3);
         }
@@ -556,18 +576,23 @@ function setHistory(date, input) {
           event.stopPropagation();
         }
       }
-      if (day == today) {
-        let dayHeading = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
+      if (day != today) {
+        let dayHeading = `${day}-${date.getMonth() + 1}-${date.getFullYear()}`;
         let dHdiv = document.createElement('div');
-        dHdiv.classList.add("inline-flex", "text-[.8rem]");
-        let clereBtn = document.createElement("btn");
+        dHdiv.classList.add("inline-flex", "text-[.8rem]", "text-blue-600");
+        let clereBtn = document.createElement("button");
         let h = document.createElement("h3");
         h.textContent = dayHeading;
         h.classList.add("border-b", "mb-2", "mt-2")
         clereBtn.textContent = "✕";
-        clereBtn.classList.add("ml-auto", "text-[1.3rem]", "ml-auto");
+        clereBtn.classList.add("ml-4", "text-[1.3rem]", "mb-2", "mt-2", "text-red-700");
         dHdiv.appendChild(h); dHdiv.appendChild(clereBtn);
-        histItems.appendChild(dHdiv);
+        dayDiv.appendChild(dHdiv);
+        todayHist.before(dayDiv);
+        clereBtn.onclick = () => {
+          localStorage.removeItem(String(day));
+          dayDiv.classList.add("hidden");
+        }
       }
     }
   }
