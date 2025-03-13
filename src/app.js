@@ -422,7 +422,8 @@ class State {
       .replaceAll("÷", "/")
       .replaceAll("^", "**")
       .replaceAll("%", "/100")
-      .replaceAll("√", "Math.sqrt");
+      .replaceAll("√", "Math.sqrt")
+      .replace(/(?<![\d.])0+(?=\d)/g, "");
     let factorials = value.match(/\d+!/g);
     if (factorials != null) {
       for (let tofac of factorials) {
