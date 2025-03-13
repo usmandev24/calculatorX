@@ -7,16 +7,13 @@
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
       "Courier New", monospace;
     --color-red-200: oklch(0.885 0.062 18.334);
-    --color-red-700: oklch(0.505 0.213 27.518);
     --color-amber-50: oklch(0.987 0.022 95.277);
     --color-green-600: oklch(0.627 0.194 149.214);
-    --color-green-700: oklch(0.527 0.154 150.069);
     --color-blue-100: oklch(0.932 0.032 255.585);
     --color-blue-200: oklch(0.882 0.059 254.128);
     --color-blue-300: oklch(0.809 0.105 251.813);
     --color-blue-400: oklch(0.707 0.165 254.624);
     --color-blue-600: oklch(0.546 0.245 262.881);
-    --color-blue-700: oklch(0.488 0.243 264.376);
     --color-purple-50: oklch(0.977 0.014 308.299);
     --color-purple-300: oklch(0.827 0.119 306.383);
     --color-purple-400: oklch(0.714 0.203 305.504);
@@ -272,17 +269,8 @@
   .mt-\[2rem\] {
     margin-top: 2rem;
   }
-  .mr-0 {
-    margin-right: calc(var(--spacing) * 0);
-  }
-  .mr-1 {
-    margin-right: calc(var(--spacing) * 1);
-  }
   .mr-2 {
     margin-right: calc(var(--spacing) * 2);
-  }
-  .mr-4 {
-    margin-right: calc(var(--spacing) * 4);
   }
   .mb-1 {
     margin-bottom: calc(var(--spacing) * 1);
@@ -341,26 +329,8 @@
   .max-h-\[80vh\] {
     max-height: 80vh;
   }
-  .w-\[1\.2rem\] {
-    width: 1.2rem;
-  }
-  .w-\[1\.3rem\] {
-    width: 1.3rem;
-  }
   .w-\[1\.4rem\] {
     width: 1.4rem;
-  }
-  .w-\[1\.5rem\] {
-    width: 1.5rem;
-  }
-  .w-\[1\.6rem\] {
-    width: 1.6rem;
-  }
-  .w-\[1rem\] {
-    width: 1rem;
-  }
-  .w-\[2rem\] {
-    width: 2rem;
   }
   .w-\[50vw\] {
     width: 50vw;
@@ -401,9 +371,6 @@
   .flex-col-reverse {
     flex-direction: column-reverse;
   }
-  .content-center {
-    align-content: center;
-  }
   .items-center {
     align-items: center;
   }
@@ -425,6 +392,9 @@
   .rounded-\[\.5rem\] {
     border-radius: .5rem;
   }
+  .rounded-\[3px\] {
+    border-radius: 3px;
+  }
   .rounded-\[4px\] {
     border-radius: 4px;
   }
@@ -438,15 +408,8 @@
     border-style: var(--tw-border-style);
     border-width: 1px;
   }
-  .border-b {
-    border-bottom-style: var(--tw-border-style);
-    border-bottom-width: 1px;
-  }
   .border-gray-300 {
     border-color: var(--color-gray-300);
-  }
-  .bg-\[\#ffffff\] {
-    background-color: #ffffff;
   }
   .bg-blue-100 {
     background-color: var(--color-blue-100);
@@ -499,17 +462,8 @@
   .p-4 {
     padding: calc(var(--spacing) * 4);
   }
-  .p-\[-1rem_1rem\] {
-    padding: -1rem 1rem;
-  }
   .p-\[\.4rem_\.2rem_0rem_\.2rem\] {
     padding: .4rem .2rem 0rem .2rem;
-  }
-  .p-\[0_1rem\] {
-    padding: 0 1rem;
-  }
-  .p-\[1rem_0rem\] {
-    padding: 1rem 0rem;
   }
   .p-\[2vw\] {
     padding: 2vw;
@@ -517,20 +471,11 @@
   .pt-1 {
     padding-top: calc(var(--spacing) * 1);
   }
-  .pt-\[-1rem\] {
-    padding-top: -1rem;
-  }
-  .pr-1 {
-    padding-right: calc(var(--spacing) * 1);
-  }
   .pr-2 {
     padding-right: calc(var(--spacing) * 2);
   }
   .pr-4 {
     padding-right: calc(var(--spacing) * 4);
-  }
-  .pb-1 {
-    padding-bottom: calc(var(--spacing) * 1);
   }
   .pb-2 {
     padding-bottom: calc(var(--spacing) * 2);
@@ -546,12 +491,6 @@
   }
   .pl-4 {
     padding-left: calc(var(--spacing) * 4);
-  }
-  .text-center {
-    text-align: center;
-  }
-  .align-middle {
-    vertical-align: middle;
   }
   .text-2xl {
     font-size: var(--text-2xl);
@@ -570,9 +509,6 @@
   .text-\[1\.2rem\] {
     font-size: 1.2rem;
   }
-  .text-\[1\.3rem\] {
-    font-size: 1.3rem;
-  }
   .text-\[1\.4rem\] {
     font-size: 1.4rem;
   }
@@ -585,9 +521,6 @@
   .text-\[2rem\] {
     font-size: 2rem;
   }
-  .text-\[3rem\] {
-    font-size: 3rem;
-  }
   .font-bold {
     --tw-font-weight: var(--font-weight-bold);
     font-weight: var(--font-weight-bold);
@@ -595,17 +528,8 @@
   .text-blue-600 {
     color: var(--color-blue-600);
   }
-  .text-blue-700 {
-    color: var(--color-blue-700);
-  }
   .text-green-600 {
     color: var(--color-green-600);
-  }
-  .text-green-700 {
-    color: var(--color-green-700);
-  }
-  .text-red-700 {
-    color: var(--color-red-700);
   }
   .underline {
     text-decoration-line: underline;
@@ -821,11 +745,6 @@
   .dark\:bg-purple-900 {
     &:where([data-theme=dark], [data-theme=dark] *) {
       background-color: var(--color-purple-900);
-    }
-  }
-  .dark\:bg-white {
-    &:where([data-theme=dark], [data-theme=dark] *) {
-      background-color: var(--color-white);
     }
   }
   .dark\:text-amber-50 {

@@ -585,11 +585,11 @@ function setHistory(date, input) {
           dayHeading += ` (yesterday)`;
         }
         let dHdiv = document.createElement('div');
-        dHdiv.classList.add("inline-flex",);
+        dHdiv.classList.add("inline-flex","items-center");
         let clereBtn = document.createElement("img");
         let h = document.createElement("h3");
         h.textContent = dayHeading;
-        h.classList.add("mb-1", "mt-4", "text-blue-600" , "text-[1rem]")
+        h.classList.add("mb-1", "mt-4", "text-blue-600" , "text-[1.1rem]")
         clereBtn.src = "src/img/delete-btn.svg"
         clereBtn.classList.add("ml-auto", "text-[1.2rem]","w-[1.4rem]","dark:bg-gray-400","rounded-[4px]" ,"mb-1","p-0.5", "mt-4", "mr-2");
         dHdiv.appendChild(h); dHdiv.appendChild(clereBtn);
