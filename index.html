@@ -34,25 +34,25 @@
             id="hist"
             class="fixed top-0 right-[-80vw] z-8 h-auto max-h-[80vh] w-[80vw] overflow-y-auto rounded-[.5rem] bg-gray-300 p-2 md:p-4 opacity-95 dark:opacity-90 transition-[right] duration-100 sm:w-[65vw] md:top-0 md:left-[65vw] md:block md:h-[100vh] md:max-h-[100vh] md:w-[35vw] md:opacity-100 dark:bg-[#100707]"
           >
-            <div class="flex">
-              <h2 class="text-[1.2rem] font-bold md:text-xl">
-                History
+            <div class="flex items-center ">
+              <h2 class="text-[1.2rem] mt-2 ml-2 font-bold md:text-xl">
+                HISTORY
               </h2>
-              <button id="delete" class="rounded-[5px] ml-auto bg-[#ffffff] p-1 text-[1.1rem]  dark:bg-gray-800">
-               Delete
+              <button id="delete" class="rounded-[5px] ml-auto bg-purple-400 p-1 text-[1.2rem]  dark:bg-gray-800">
+               All Clear
               </button>
               <button
                 id="closeHist"
-                class="rounded-[5px] ml-4 mr-0 bg-purple-500 p-2 pt-1 pb-1 text-[1.1rem] md:hidden dark:bg-gray-800"
+                class="rounded-[5px] ml-4  pl-1 pr-2 mr-2 bg-white text-[1.5rem] md:hidden dark:bg-gray-800"
               >
-                close
+                ⇉
               </button>
             </div>
-            <div id="histItems" class="p-1 flex flex-col-reverse">
+            <div id="histItems" class="p-1 pl-2 flex flex-col-reverse">
               <div id = "tHistItems" class="p-1 flex flex-col-reverse"></div>
-              <div id = "tHeading" class="inline-flex text-[.8rem] text-blue-600">
-                <h3 class="border-b mb-2 mt-2">Today</h3>
-                <button id="deletetHist" class="ml-4 text-[1.3rem] mb-2 mt-2 text-red-700">✕</button>
+              <div id = "tHeading" class="inline-flex">
+                <h3 class=" mb-1 mt-3 text-[.8rem] text-blue-600">Today</h3>
+                <img id="deletetHist" class="ml-auto  w-[1.4rem] p-0.5 dark:bg-gray-300 mb-1 mr-2 mt-4" src="src/img/delete-btn.svg">
               </div>
             </div>
           </div>

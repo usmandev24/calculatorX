@@ -230,11 +230,11 @@ class State {
     this.touchBtnStart(this.btns);
     this.keyFunctionsStart();
     this.deletehBtn.onclick = () => this.deleteHist();
-    let todayDate = this.date.getDate().toString();
-    if (localStorage.getItem(todayDate) == null) {
-      this.memory[this.date.getDate()] = Object.create(null);
+    let todayDay = this.date.getDay().toString();
+    if (localStorage.getItem(todayDay) == null) {
+      this.memory[this.date.getDay()] = Object.create(null);
     } else {
-      this.memory[this.date.getDate()] = JSON.parse(localStorage.getItem(todayDate))
+      this.memory[this.date.getDay()] = JSON.parse(localStorage.getItem(todayDay))
     }
     let btnDeltHist = document.getElementById("deletetHist");
     btnDeltHist.onclick = () => this.deleteTodayHist();
@@ -482,10 +482,10 @@ class State {
 
   }
   updtLocStrgHistObj(result) {
-    let todayDate = this.date.getDate();
-    this.memory[todayDate][this.preValue] = String(result);
-    localStorage.setItem(String(todayDate), JSON.stringify(this.memory[todayDate]));
-    console.log(this.memory[todayDate]);
+    let todayDay = this.date.getDay();
+    this.memory[todayDay][this.preValue] = String(result);
+    localStorage.setItem(String(todayDay), JSON.stringify(this.memory[todayDay]));
+    console.log(this.memory[todayDay]);
   }
   setResults() {
     if (this.result !== "?") {
@@ -495,20 +495,23 @@ class State {
     }
   }
   deleteHist() {
-    let today = this.date.getDate();
+    let today = this.date.getDay();
     let confirm = window.confirm(` " OK "  If you want to delete all History`);
     if (!confirm) return;
     this.memory[today] = Object.create(null);
-    for (let day = today - 6; day <= today; day += 1) {
+    for (let day = 0; day <= 6; day += 1) {
       if (day.toString() in localStorage)
         localStorage.removeItem(day.toString());
     }
-    let histItems = document.getElementById("histItems");
+    let histDivs = document.querySelectorAll(".localHistDiv");
+    histDivs = Array.from(histDivs);
+    for (let div of histDivs) {
+      div.textContent = ""
+    }
     this.todayHist.textContent = "";
-    histItems.textContent = ""
   }
   deleteTodayHist() {
-    let today = this.date.getDate();
+    let today = this.date.getDay();
     this.todayHist.textContent = "";
     this.memory[today] = Object.create(null);
     localStorage.removeItem(String(today));
@@ -537,16 +540,15 @@ function setTheme(html, themeBtn) {
 function setHistory(date, input) {
   let todayHist = document.getElementById("tHistItems");
   let histObj;
-  let today = date.getDate(); console.log(today)
-  let cont = 6;
-  for (let day = today - 6; day <= today; day += 1) {
+  let today = date.getDay();
+  let changed = false;
+  for (let day = today - 6;;) {
+    if (day<0) {
+      day += 7;
+      changed = true;
+    } 
     histObj = localStorage.getItem(String(day));
     histObj = JSON.parse(histObj);
-
-    if (cont > 5 && histObj != null) {
-      localStorage.removeItem(String(day));
-    }
-    cont -= 1;
     if (histObj != null) {
       let results = Object.values(histObj);
       let exps = Object.keys(histObj);
@@ -554,7 +556,7 @@ function setHistory(date, input) {
       
       if (day != today) {
         dayDiv.setAttribute("id", String(day));
-        dayDiv.classList.add("flex", "flex-col-reverse");
+        dayDiv.classList.add("flex", "flex-col-reverse","localHistDiv");
       } else {
         dayDiv = todayHist;
       }
@@ -575,17 +577,21 @@ function setHistory(date, input) {
           input.value = resItem.textContent;
           event.stopPropagation();
         }
-      }
+      } let d = new Date;
       if (day != today) {
-        let dayHeading = `${day}-${date.getMonth() + 1}-${date.getFullYear()}`;
+        let weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+        let dayHeading = `${weekdays[day]}`;
+        if (today-1 == day) {
+          dayHeading += ` (yesterday)`;
+        }
         let dHdiv = document.createElement('div');
-        dHdiv.classList.add("inline-flex", "text-[.8rem]", "text-blue-600");
-        let clereBtn = document.createElement("button");
+        dHdiv.classList.add("inline-flex",);
+        let clereBtn = document.createElement("img");
         let h = document.createElement("h3");
         h.textContent = dayHeading;
-        h.classList.add("border-b", "mb-2", "mt-2")
-        clereBtn.textContent = "✕";
-        clereBtn.classList.add("ml-4", "text-[1.3rem]", "mb-2", "mt-2", "text-red-700");
+        h.classList.add("mb-1", "mt-4", "text-blue-600" , "text-[1rem]")
+        clereBtn.src = "src/img/delete-btn.svg"
+        clereBtn.classList.add("ml-auto", "text-[1.2rem]","w-[1.4rem]","dark:bg-gray-400","rounded-[4px]" ,"mb-1","p-0.5", "mt-4", "mr-2");
         dHdiv.appendChild(h); dHdiv.appendChild(clereBtn);
         dayDiv.appendChild(dHdiv);
         todayHist.before(dayDiv);
@@ -595,6 +601,13 @@ function setHistory(date, input) {
         }
       }
     }
+    if (changed) {
+      day -= 7;
+      changed = false
+    } 
+    if (day == today) break;
+    day += 1;
+    
   }
 }
 function setScheme(interface) {
