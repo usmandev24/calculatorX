@@ -1,6 +1,10 @@
 class Interface {
   constructor() {
     this.html = document.querySelector("html");
+    this.aboutdiv = document.getElementById("about");
+    this.aboutBtn = document.getElementById("aboutBtn");
+    this.clsAbtBtn = document.getElementById("closeAboutBtn");
+    this.calcBody = document.getElementById("body");
     this.h1 = document.getElementById("h1");
     this.togBtn = document.getElementById("togBtn");
     this.mlist = document.getElementById("mlist");
@@ -36,6 +40,7 @@ class Interface {
     this.displaying = "sci";
     this.mshow = false;
     this.histShow = false;
+    this.isAboutShowing = false;
   }
   setEvents() {
     this.mBtnSci.addEventListener("click", (event) => this.showSciDiv(event));
@@ -50,6 +55,20 @@ class Interface {
     this.invBtn.addEventListener("click", () => this.invSwitch());
     window.addEventListener("click", (event) => this.hideSide(event));
     this.themeBtn.onclick = () => this.changeTheme();
+    this.aboutBtn.onclick = () => this.showHideAbout();
+    this.clsAbtBtn.onclick = () => this.showHideAbout();
+  }
+  showHideAbout () {
+    if (!this.isAboutShowing) {
+       this.aboutdiv.classList.replace("hidden", "block");
+       this.calcBody.classList.replace("block", "hidden")
+       this.isAboutShowing = true
+    } else {
+      this.calcBody.classList.replace("hidden", "block");
+      this.aboutdiv.classList.replace("block", "hidden");
+       this.isAboutShowing = false
+    }
+   
   }
   changeTheme() {
     let curnt = this.html.getAttribute("data-theme"); console.log(curnt)
