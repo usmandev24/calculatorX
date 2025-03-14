@@ -5,13 +5,17 @@ A fully functional and feature-rich calculator with light and dark mode themes. 
 ## Features
 
 - **Light and Dark Mode**: Users can switch between light and dark themes for a better user experience.
-- **Standard and Scientific Modes**: Supports basic arithmetic and advanced scientific functions.
+- **Standard and Scientific Modes**: Supports basic arithmetic and advanced scientific functions. 
 - **Responsive UI**: The interface adapts seamlessly across different screen sizes.
-- **History Feature**: Keeps a record of previous calculations.
+- **History Feature**: Keeps a record of previous calculations for seven days. You can remove any day history.
 - **Live Results Display**: Instantly updates the results as users input expressions.
-
+- **Install** : You can install it using any modern browser. And can use it like a native app
 ## Screenshots
+Screenshots in desktop dark theme:
+![image](https://github.com/user-attachments/assets/171f66d9-9741-43f5-8f25-d4cc02b3b9f6)
 
+Light Theme : 
+![image](https://github.com/user-attachments/assets/0240b4ad-27cb-4e02-9c18-9c722cfcd003)
 
 ## Installation
 
@@ -24,7 +28,7 @@ A fully functional and feature-rich calculator with light and dark mode themes. 
    ```sh
    npm install  # or yarn install
    ```
-
+3. Using Browser : Click on three dots(Top left corner) ⋮ than find option "Add to home" click on it, than click on install as app. On Edge find "Apps" option. There you can install it as app.
 
 ## Usage
 
