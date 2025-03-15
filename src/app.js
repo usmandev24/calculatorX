@@ -58,17 +58,17 @@ class Interface {
     this.aboutBtn.onclick = () => this.showHideAbout();
     this.clsAbtBtn.onclick = () => this.showHideAbout();
   }
-  showHideAbout () {
+  showHideAbout() {
     if (!this.isAboutShowing) {
-       this.aboutdiv.classList.replace("hidden", "block");
-       this.calcBody.classList.replace("block", "hidden")
-       this.isAboutShowing = true
+      this.aboutdiv.classList.replace("hidden", "block");
+      this.calcBody.classList.replace("block", "hidden")
+      this.isAboutShowing = true
     } else {
       this.calcBody.classList.replace("hidden", "block");
       this.aboutdiv.classList.replace("block", "hidden");
-       this.isAboutShowing = false
+      this.isAboutShowing = false
     }
-   
+
   }
   changeTheme() {
     let curnt = this.html.getAttribute("data-theme"); console.log(curnt)
@@ -236,6 +236,11 @@ class State {
     this.btns = Array.from(document.querySelectorAll(".st-btn"));
     this.todayHist = document.getElementById("tHistItems");
     this.deletehBtn = document.getElementById("delete");
+    this.degRadBtn = document.getElementById("deg");
+    this.sciBtns = ["sin", "cos", "tan", "csc", "sec", "cot", "ln", "log", "sin⁻¹", "cos⁻¹",
+      "tan⁻¹", "csc⁻¹", "sec⁻¹", "cot⁻¹", "ln", "log", "sinh", "cosh", "tanh", "csch", "sech",
+      "coth", "ln", "log", "sinh⁻¹", "cosh⁻¹", "tanh⁻¹", "csch⁻¹", "sech⁻¹", "coth⁻¹", "ln", "log",];
+    this.sciBtnsToReplace = [];
     this.dataValid = "123456789+-*×÷/0.()^%√!";
     this.vldTouchBtns = "1234567890+-×÷.%^!";
     this.oper = "+-*×÷/^.";
@@ -244,6 +249,7 @@ class State {
     this.preSelection = 1;
     this.key = "";
     this.memory = Object.create(null);
+    this.deg = false;
   }
   start() {
     this.touchBtnStart(this.btns);
@@ -305,8 +311,7 @@ class State {
     let value = this.input.value;
     let curntSelection = pselection;
     btnContent = btnContent.trim();
-    let currnetType = this.ui.sciBtns.currnetType;
-    let sciIndex = this.ui.sciBtns[currnetType].indexOf(btnContent);
+    let sciIndex = this.sciBtns.indexOf(btnContent);
     if (this.vldTouchBtns.includes(btnContent)) {
       value =
         value.slice(0, pselection) +
@@ -353,8 +358,11 @@ class State {
         btnContent +
         "()" +
         value.slice(pselection, value.length);
+      if (!this.sciBtnsToReplace.includes(btnContent)) {
+        this.sciBtnsToReplace.push(btnContent);
+      }
       curntSelection += btnContent.length + 1;
-    };
+    }
     this.input.value = value;
     this.input.selectionEnd = curntSelection;
     return this.opChecker(pvalue, curntSelection);
@@ -447,14 +455,16 @@ class State {
     if (factorials != null) {
       for (let tofac of factorials) {
         let num = Number(tofac.slice(0, tofac.length - 1))
-        value = value.replace(tofac, `${factorial(num)}`)
+        value = value.replace(tofac, `${factorial(num)}`);
       }
     }
-    if (this.ui.displaying == "sci") {
-      for (let key of Object.keys(replaceBtns)) {
-        let test = new RegExp(key + "(?=\\()", "g")
-        value = value.replaceAll(test, replaceBtns[key]);
-      }
+    if (this.sciBtnsToReplace.length != 0) {
+      if (!this.deg) {
+        for (let key of this.sciBtnsToReplace) {
+          let test = new RegExp(key + "(?=\\()", "g");
+          value = value.replaceAll(test, replaceBtns[key]);
+        }
+      } 
     }
     try {
       let instResult = Number(eval(value));
@@ -562,21 +572,21 @@ function setHistory(date, input) {
   let histObj;
   let today = date.getDay();
   let changed = false;
-  for (let day = today - 6;;) {
-    if (day<0) {
+  for (let day = today - 6; ;) {
+    if (day < 0) {
       day += 7;
       changed = true;
-    } 
+    }
     histObj = localStorage.getItem(String(day));
     histObj = JSON.parse(histObj);
     if (histObj != null) {
       let results = Object.values(histObj);
       let exps = Object.keys(histObj);
       let dayDiv = document.createElement("div");
-      
+
       if (day != today) {
         dayDiv.setAttribute("id", String(day));
-        dayDiv.classList.add("flex", "flex-col-reverse","localHistDiv");
+        dayDiv.classList.add("flex", "flex-col-reverse", "localHistDiv");
       } else {
         dayDiv = todayHist;
       }
@@ -601,17 +611,17 @@ function setHistory(date, input) {
       if (day != today) {
         let weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
         let dayHeading = `${weekdays[day]}`;
-        if (today-1 == day) {
+        if (today - 1 == day) {
           dayHeading += ` (yesterday)`;
         }
         let dHdiv = document.createElement('div');
-        dHdiv.classList.add("inline-flex","items-center");
+        dHdiv.classList.add("inline-flex", "items-center");
         let clereBtn = document.createElement("img");
         let h = document.createElement("h3");
         h.textContent = dayHeading;
-        h.classList.add("mb-1", "mt-4", "text-blue-600" , "text-[1.1rem]")
+        h.classList.add("mb-1", "mt-4", "text-blue-600", "text-[1.1rem]")
         clereBtn.src = "src/img/delete-btn.svg"
-        clereBtn.classList.add("ml-auto", "text-[1.2rem]","w-[1.4rem]","dark:bg-gray-400","rounded-[4px]" ,"mb-1","p-0.5", "mt-4", "mr-2");
+        clereBtn.classList.add("ml-auto", "text-[1.2rem]", "w-[1.4rem]", "dark:bg-gray-300", "rounded-[4px]", "mb-1", "p-0.5", "mt-4", "mr-2");
         dHdiv.appendChild(h); dHdiv.appendChild(clereBtn);
         dayDiv.appendChild(dHdiv);
         todayHist.before(dayDiv);
@@ -624,10 +634,10 @@ function setHistory(date, input) {
     if (changed) {
       day -= 7;
       changed = false
-    } 
+    }
     if (day == today) break;
     day += 1;
-    
+
   }
 }
 function setScheme(interface) {
