@@ -66,12 +66,26 @@ class Interface {
     if (innerHeight > 1080) {
       this.instCalResult.classList.replace("text-[1.8rem]", "text-[2.5rem]")
       this.input.classList.add("pt-[2rem]");
-    } if (innerHeight > 760) {
-      this.instCalResult.classList.replace("text-[1.8rem]", "text-[1.9rem]")
+    }
+    else if (innerHeight > 760) {
+      this.instCalResult.classList.add("text-[1.8rem]")
+      this.instCalResult.classList.remove("text-[1rem]")
+      this.instCalResult.classList.remove("text-[1.5rem]")
       this.input.classList.add("pt-[1.5rem]")
-    } else if (innerHeight < 760) {
-      this.instCalResult.classList.replace("text-[2rem]", "text-[1.8rem]")
-      this.input.classList.remove("pt-[2rem]");
+    } else if (innerHeight > 660) {
+      this.instCalResult.classList.add("text-[1.8rem]")
+      this.input.classList.add("pt-[1rem]")
+    }else if (innerHeight < 660 && innerWidth < 480) {
+      this.instCalResult.classList.add("text-[1.8rem]")
+      this.instCalResult.classList.remove("text-[1rem]")
+      this.input.classList.remove("pt-[2rem]")
+      this.input.classList.remove("pt-[1.5rem]")
+      this.input.classList.remove("pt-[1rem]")
+    } else if (innerHeight < 400 && innerWidth > 600) {
+      this.instCalResult.classList.add("text-[1rem]")
+      this.input.classList.remove("pt-[2rem]")
+      this.input.classList.remove("pt-[1.5rem]")
+      this.input.classList.remove("pt-[1rem]")
     }
   }
   showHideAbout() {
@@ -567,7 +581,7 @@ class State {
   setResults() {
     let result = this.result;
     if (result !== "?") {
-      result = this.insertComma(result);
+      result = this.insertComma(String(result));
       this.updateHist(result);
       this.preValue = result;
       this.input.value = result;
