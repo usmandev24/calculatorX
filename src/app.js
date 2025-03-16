@@ -16,6 +16,7 @@ class Interface {
     this.stanDiv = document.getElementById("stan");
     this.sciDiv = document.getElementById("sci");
     this.input = document.querySelector("input");
+    this.inputDiv = document.getElementById("inputdiv");
     this.instCalResult = document.getElementById("instCal");
     this.deg = document.getElementById("deg");
     this.allSciBtnsNode = document.querySelectorAll(".cSci");
@@ -60,6 +61,7 @@ class Interface {
     this.themeBtn.onclick = () => this.changeTheme();
     this.aboutBtn.onclick = () => this.showHideAbout();
     this.clsAbtBtn.onclick = () => this.showHideAbout();
+    this.inputDiv.onclick = () => {this.input.focus()};
     window.addEventListener("resize", () => { this.adjustResize() })
   }
   adjustResize() {
