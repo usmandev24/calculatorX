@@ -318,7 +318,7 @@ class State {
         this.preValue,
         this.preSelection,
       );
-      this.input.value = this.insertComma(this.input.value);
+      this.insertComma(this.input.value, this.preSelection);
       this.result = this.praser();
       this.updateInstResults(this.insertComma(String(this.result)));
     });
@@ -340,7 +340,7 @@ class State {
           this.preSelection,
           btn.textContent,
         );
-        this.input.value = this.insertComma(this.input.value);
+        this.insertComma(this.input.value, this.preSelection);
         this.result = this.praser();
         this.updateInstResults(this.insertComma(String(this.result)));
       });
@@ -451,6 +451,7 @@ class State {
     }
     this.input.value = input.value;
     pvalue = input.value;
+    pselection = this.input.selectionEnd;
     return [pvalue, pselection];
   }
 
@@ -522,12 +523,19 @@ class State {
       return "?";
     }
   }
-  insertComma(string) {
+  insertComma(string, pselection) {
+    let stLength = string.length;
     let value = string.replace(/,/g, "");
     let matches = value.match(/(?<!\d\.)\b\d+\b(?!\.\d)/g);
     let toReplace = [];
     let count = 0;
-    if (!matches) return value;
+    if (!matches) {
+      if (pselection != undefined) {
+        this.input.value = value;
+        this.input.selectionEnd = pselection;
+      }
+      return value;
+    }
     for (let num of matches) {
       let converted = [];
       if (num.length > 3) {
@@ -541,7 +549,11 @@ class State {
         count += 1
       }
     }
-    return value;
+    if (pselection != undefined) {
+      this.input.value = value;
+      this.input.selectionEnd = pselection + value.length - stLength;
+    }
+    return value
   }
   updateInstResults(result) {
     this.instCalResult.textContent = "";
