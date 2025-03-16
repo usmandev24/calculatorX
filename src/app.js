@@ -15,6 +15,8 @@ class Interface {
     this.mBtnStan = document.getElementById("btnStan");
     this.stanDiv = document.getElementById("stan");
     this.sciDiv = document.getElementById("sci");
+    this.input = document.querySelector("input");
+    this.instCalResult = document.getElementById("instCal");
     this.deg = document.getElementById("deg");
     this.allSciBtnsNode = document.querySelectorAll(".cSci");
     this.sciBtns = {
@@ -43,6 +45,7 @@ class Interface {
     this.isAboutShowing = false;
   }
   setEvents() {
+    this.adjustResize();
     this.mBtnSci.addEventListener("click", (event) => this.showSciDiv(event));
     this.mBtnStan.addEventListener("click", () => this.showStnDiv());
     this.togBtn.addEventListener("click", (event) => this.showHideManue(event));
@@ -57,6 +60,19 @@ class Interface {
     this.themeBtn.onclick = () => this.changeTheme();
     this.aboutBtn.onclick = () => this.showHideAbout();
     this.clsAbtBtn.onclick = () => this.showHideAbout();
+    window.addEventListener("resize", () => { this.adjustResize() })
+  }
+  adjustResize() {
+    if (innerHeight > 1080) {
+      this.instCalResult.classList.replace("text-[1.8rem]", "text-[2.5rem]")
+      this.input.classList.add("pt-[2rem]");
+    } if (innerHeight > 760) {
+      this.instCalResult.classList.replace("text-[1.8rem]", "text-[1.9rem]")
+      this.input.classList.add("pt-[1.5rem]")
+    } else if (innerHeight < 760) {
+      this.instCalResult.classList.replace("text-[2rem]", "text-[1.8rem]")
+      this.input.classList.remove("pt-[2rem]");
+    }
   }
   showHideAbout() {
     if (!this.isAboutShowing) {
@@ -231,7 +247,7 @@ class State {
   constructor(ui) {
     this.ui = ui;
     this.date = new Date;
-    this.input = document.querySelector("textarea");
+    this.input = document.querySelector("input");
     this.instCalResult = document.getElementById("instCal");
     this.btns = Array.from(document.querySelectorAll(".st-btn"));
     this.todayHist = document.getElementById("tHistItems");
@@ -250,6 +266,7 @@ class State {
     this.key = "";
     this.memory = Object.create(null);
     this.deg = false;
+    this.intialScrollWidth = Array.from([this.input.scrollWidth])
   }
   start() {
     this.touchBtnStart(this.btns);
@@ -287,14 +304,21 @@ class State {
         this.preValue,
         this.preSelection,
       );
+      this.input.value = this.insertComma(this.input.value);
       this.result = this.praser();
-      this.updateInstResults(this.result);
+      this.updateInstResults(this.insertComma(String(this.result)));
     });
+    this.input.addEventListener("blur", () => {
+      setTimeout(() => {
+        this.input.focus();
+      }, 1000);
+    })
   }
 
   touchBtnStart(btns) {
     for (let btn of btns) {
-      btn.addEventListener("click", () => {
+      btn.addEventListener("click", (event) => {
+        event.stopPropagation();
         this.input.focus();
         this.preSelection = this.input.selectionEnd;
         [this.preValue, this.preSelection] = this.touchInputValidater(
@@ -302,13 +326,14 @@ class State {
           this.preSelection,
           btn.textContent,
         );
+        this.input.value = this.insertComma(this.input.value);
         this.result = this.praser();
-        this.updateInstResults(this.result);
+        this.updateInstResults(this.insertComma(String(this.result)));
       });
     }
   }
   touchInputValidater(pvalue, pselection, btnContent) {
-    let value = this.input.value;
+    let value = this.input.value.trim();
     let curntSelection = pselection;
     btnContent = btnContent.trim();
     let sciIndex = this.sciBtns.indexOf(btnContent);
@@ -324,7 +349,7 @@ class State {
       curntSelection -= 1;
     } else if (btnContent == "=") {
       this.setResults();
-      return
+      return [pvalue, pselection]
     } else if (btnContent == "( )") {
       value =
         value.slice(0, pselection) +
@@ -362,9 +387,15 @@ class State {
         this.sciBtnsToReplace.push(btnContent);
       }
       curntSelection += btnContent.length + 1;
-    }
-    this.input.value = value;
+    };
+    this.input.value = value
     this.input.selectionEnd = curntSelection;
+    let inputLen = value.length;
+    if (inputLen === curntSelection) {
+      this.input.scrollLeft = this.input.scrollWidth;
+    } else {
+      this.input.scrollLeft = this.input.scrollWidth * (curntSelection / inputLen) - this.input.offsetWidth + 20
+    }
     return this.opChecker(pvalue, curntSelection);
   }
 
@@ -410,7 +441,6 @@ class State {
   }
 
   praser() {
-
     let replaceBtns = {
       "sin": "Math.sin",
       "cos": "Math.cos",
@@ -442,14 +472,13 @@ class State {
       "log": "Math.log10",
       "ln": "Math.log"
     };
-
     let value = this.input.value;
     value = value
       .replaceAll("×", "*")
       .replaceAll("÷", "/")
       .replaceAll("^", "**")
       .replaceAll("%", "/100")
-      .replaceAll("√", "Math.sqrt")
+      .replaceAll("√", "Math.sqrt").replace(/,/g, "")
       .replace(/(?<![\d.])0+(?=\d)/g, "");
     let factorials = value.match(/\d+!/g);
     if (factorials != null) {
@@ -464,7 +493,7 @@ class State {
           let test = new RegExp(key + "(?=\\()", "g");
           value = value.replaceAll(test, replaceBtns[key]);
         }
-      } 
+      }
     }
     try {
       let instResult = Number(eval(value));
@@ -474,10 +503,31 @@ class State {
       if (instResult / Number(instResult.toFixed(0)) === 1) {
         return instResult;
       }
-      return instResult.toFixed(5)
-    } catch (error) {
-      return "?"
+      return instResult.toFixed(5);
+    } catch {
+      return "?";
     }
+  }
+  insertComma(string) {
+    let value = string.replace(/,/g, "");
+    let matches = value.match(/(?<!\d\.)\b\d+\b(?!\.\d)/g);
+    let toReplace = [];
+    let count = 0;
+    if (!matches) return value;
+    for (let num of matches) {
+      let converted = [];
+      if (num.length > 3) {
+        for (let i = num.length - 3; i > 0; i -= 3) {
+          converted.unshift(num.slice(i, i + 3));
+          converted.unshift(",");
+          if (i - 3 <= 0) converted.unshift(num.slice(0, i));
+        }
+        toReplace.push(converted.join(""));
+        value = value.replace(num, toReplace[count])
+        count += 1
+      }
+    }
+    return value;
   }
   updateInstResults(result) {
     this.instCalResult.textContent = "";
@@ -513,13 +563,14 @@ class State {
     let todayDay = this.date.getDay();
     this.memory[todayDay][this.preValue] = String(result);
     localStorage.setItem(String(todayDay), JSON.stringify(this.memory[todayDay]));
-    console.log(this.memory[todayDay]);
   }
   setResults() {
-    if (this.result !== "?") {
-      this.updateHist(this.result);
-      this.preValue = this.result;
-      this.input.value = this.result;
+    let result = this.result;
+    if (result !== "?") {
+      result = this.insertComma(result);
+      this.updateHist(result);
+      this.preValue = result;
+      this.input.value = result;
     }
   }
   deleteHist() {
