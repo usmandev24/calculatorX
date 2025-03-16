@@ -473,12 +473,10 @@ class State {
       }
       if (instResult / Number(instResult.toFixed(0)) === 1) {
         return instResult;
-      } else if (instResult / instResult != 1) {
-        return "?";
-      };
-      return instResult.toFixed(3);
-    } catch {
-      return "?";
+      }
+      return instResult.toFixed(5)
+    } catch (error) {
+      return "?"
     }
   }
   updateInstResults(result) {
