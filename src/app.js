@@ -571,7 +571,7 @@ class State {
   }
   updateInstResults(result) {
     this.instCalResult.textContent = "";
-    this.instCalResult.textContent = result;
+    this.instCalResult.textContent ="="+result;
   }
   updateHist(result) {
     let input = this.input;
