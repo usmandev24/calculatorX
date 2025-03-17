@@ -61,7 +61,7 @@ class Interface {
     this.themeBtn.onclick = () => this.changeTheme();
     this.aboutBtn.onclick = () => this.showHideAbout();
     this.clsAbtBtn.onclick = () => this.showHideAbout();
-    this.inputDiv.onclick = () => {this.input.focus()};
+    this.inputDiv.onclick = () => { this.input.focus() };
     window.addEventListener("resize", () => { this.adjustResize() })
   }
   adjustResize() {
@@ -77,7 +77,7 @@ class Interface {
     } else if (innerHeight > 660) {
       this.instCalResult.classList.add("text-[1.8rem]")
       this.input.classList.add("pt-[1rem]")
-    }else if (innerHeight < 660 && innerWidth < 480) {
+    } else if (innerHeight < 660 && innerWidth < 480) {
       this.instCalResult.classList.add("text-[1.8rem]")
       this.instCalResult.classList.remove("text-[1rem]")
       this.input.classList.remove("pt-[2rem]")
@@ -103,7 +103,7 @@ class Interface {
 
   }
   changeTheme() {
-    let curnt = this.html.getAttribute("data-theme"); console.log(curnt)
+    let curnt = this.html.getAttribute("data-theme");
     if (curnt == "dark") {
       this.html.setAttribute("data-theme", "light");
       localStorage.setItem("theme", "light")
@@ -579,10 +579,17 @@ class State {
     this.todayHist.appendChild(item);
     this.updtLocStrgHistObj(result);
     item.onclick = () => {
-      input.value = value.textContent.slice(0, value.textContent.length - 3);
+      this.sciBtnsToReplace = value.textContent.match(/[^ \d+\(\),\.]\w+⁻¹|[^ \d+\(\),\.]\w+/g);
+      if (!this.sciBtnsToReplace) this.sciBtnsToReplace = [];
+      let valueText = value.textContent.replaceAll(" ", "");
+      input.value = valueText.slice(0, valueText.length - 1);
+      this.result = this.praser();
+      this.updateInstResults(this.insertComma(String(this.result)));
     }
     resItem.onclick = (event) => {
       input.value = resItem.textContent;
+      this.result = this.praser();
+      this.updateInstResults(this.result);
       event.stopPropagation();
     }
 
@@ -644,7 +651,7 @@ function setTheme(html, themeBtn) {
       themeBtn.textContent = "🌙";
   }
 }
-function setHistory(date, input) {
+function setHistory(date, input, state) {
   let todayHist = document.getElementById("tHistItems");
   let histObj;
   let today = date.getDay();
@@ -678,11 +685,20 @@ function setHistory(date, input) {
         item.appendChild(resItem);
         dayDiv.appendChild(item)
         item.onclick = () => {
-          input.value = value.textContent.slice(0, value.textContent.length - 3);
+          state.sciBtnsToReplace = value.textContent.match(/[^ \d+\(\),\.]\w+⁻¹|[^ \d+\(\),\.]\w+/g);
+          if (!state.sciBtnsToReplace) state.sciBtnsToReplace = [];
+          let valueText = value.textContent.replaceAll(" ", "")
+          input.value = valueText.slice(0, valueText.length - 1);
+          state.result = state.praser();
+          state.updateInstResults(state.insertComma(String(state.result)));
+          input.focus();
         }
         resItem.onclick = (event) => {
-          input.value = resItem.textContent;
           event.stopPropagation();
+          input.value = resItem.textContent;
+          state.result = state.praser();
+          state.updateInstResults(state.result);
+          input.focus();
         }
       } let d = new Date;
       if (day != today) {
@@ -733,7 +749,7 @@ function main() {
   setScheme(interface);
   interface.setEvents();
   let state = new State(interface);
-  setHistory(state.date, state.input);
+  setHistory(state.date, state.input, state);
   state.start();
 }
 window.addEventListener("load", () => main());
