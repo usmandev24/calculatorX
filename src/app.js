@@ -69,15 +69,20 @@ class Interface {
       this.instCalResult.classList.replace("text-[1.8rem]", "text-[2.5rem]")
       this.input.classList.add("pt-[2rem]");
     }
-    else if (innerHeight > 760) {
+    else if (innerHeight > 760 && innerWidth > 400) {
       this.instCalResult.classList.add("text-[1.8rem]")
       this.instCalResult.classList.remove("text-[1rem]")
       this.instCalResult.classList.remove("text-[1.6rem]")
       this.input.classList.add("pt-[1.5rem]")
-    } else if (innerHeight > 660) {
+    } else if (innerHeight > 660 && innerWidth > 400) {
       this.instCalResult.classList.add("text-[1.8rem]")
       this.instCalResult.classList.remove("text-[1rem]")
       this.instCalResult.classList.remove("text-[1.6rem]")
+      this.input.classList.add("pt-[1rem]")
+    }else if (innerHeight > 660 && innerWidth < 400) {
+      this.instCalResult.classList.add("text-[1.6rem]")
+      this.instCalResult.classList.remove("text-[1rem]")
+      this.instCalResult.classList.remove("text-[1.8rem]")
       this.input.classList.add("pt-[1rem]")
     } else if (innerHeight < 660 && innerWidth < 480) {
       this.instCalResult.classList.add("text-[1.6rem]")
