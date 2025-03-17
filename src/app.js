@@ -72,19 +72,29 @@ class Interface {
     else if (innerHeight > 760) {
       this.instCalResult.classList.add("text-[1.8rem]")
       this.instCalResult.classList.remove("text-[1rem]")
-      this.instCalResult.classList.remove("text-[1.5rem]")
+      this.instCalResult.classList.remove("text-[1.6rem]")
       this.input.classList.add("pt-[1.5rem]")
     } else if (innerHeight > 660) {
       this.instCalResult.classList.add("text-[1.8rem]")
+      this.instCalResult.classList.remove("text-[1rem]")
+      this.instCalResult.classList.remove("text-[1.6rem]")
       this.input.classList.add("pt-[1rem]")
     } else if (innerHeight < 660 && innerWidth < 480) {
-      this.instCalResult.classList.add("text-[1.8rem]")
+      this.instCalResult.classList.add("text-[1.6rem]")
       this.instCalResult.classList.remove("text-[1rem]")
+      this.instCalResult.classList.remove("text-[1.8rem]")
       this.input.classList.remove("pt-[2rem]")
       this.input.classList.remove("pt-[1.5rem]")
       this.input.classList.remove("pt-[1rem]")
-    } else if (innerHeight < 400 && innerWidth > 600) {
+    } else if (innerHeight < 400) {
       this.instCalResult.classList.add("text-[1rem]")
+      this.input.classList.remove("pt-[2rem]")
+      this.input.classList.remove("pt-[1.5rem]")
+      this.input.classList.remove("pt-[1rem]")
+    } else if (innerHeight < 760 && innerWidth > 500) {
+      this.instCalResult.classList.add("text-[1.8rem]")
+      this.instCalResult.classList.remove("text-[1rem]")
+      this.instCalResult.classList.remove("text-[1.6rem]")
       this.input.classList.remove("pt-[2rem]")
       this.input.classList.remove("pt-[1.5rem]")
       this.input.classList.remove("pt-[1rem]")
@@ -556,7 +566,7 @@ class State {
   }
   updateInstResults(result) {
     this.instCalResult.textContent = "";
-    this.instCalResult.textContent = ` =` + result;
+    this.instCalResult.textContent = result;
   }
   updateHist(result) {
     let input = this.input;
