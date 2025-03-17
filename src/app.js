@@ -576,17 +576,23 @@ class State {
     this.todayHist.appendChild(item);
     this.updtLocStrgHistObj(result);
     item.onclick = () => {
-      this.sciBtnsToReplace = value.textContent.match(/[^ \d+\(\),\.]\w+⁻¹|[^ \d+\(\),\.]\w+/g);
-      if (!this.sciBtnsToReplace) this.sciBtnsToReplace = [];
+      let sciBtns = value.textContent.match(/[^ \d+\(\),\.]\w+⁻¹|[^ \d+\(\),\.]\w+/g);
+      if (!sciBtns) sciBtns = [];
+      sciBtns.forEach((value, index) => {
+        if (!this.sciBtnsToReplace.includes(value))
+          this.sciBtnsToReplace.push(value);
+      })
       let valueText = value.textContent.replaceAll(" ", "");
       input.value = valueText.slice(0, valueText.length - 1);
       this.result = this.praser();
       this.updateInstResults(this.insertComma(String(this.result)));
+      this.input.focus()
     }
     resItem.onclick = (event) => {
       input.value = resItem.textContent;
       this.result = this.praser();
       this.updateInstResults(this.result);
+      this.input.focus()
       event.stopPropagation();
     }
 
@@ -682,8 +688,12 @@ function setHistory(date, input, state) {
         item.appendChild(resItem);
         dayDiv.appendChild(item)
         item.onclick = () => {
-          state.sciBtnsToReplace = value.textContent.match(/[^ \d+\(\),\.]\w+⁻¹|[^ \d+\(\),\.]\w+/g);
-          if (!state.sciBtnsToReplace) state.sciBtnsToReplace = [];
+          let sciBtns = value.textContent.match(/[^ \d+\(\),\.]\w+⁻¹|[^ \d+\(\),\.]\w+/g);
+          if (!sciBtns) sciBtns = [];
+          sciBtns.forEach((value, index) => {
+            if (!state.sciBtnsToReplace.includes(value))
+              state.sciBtnsToReplace.push(value);
+          })
           let valueText = value.textContent.replaceAll(" ", "")
           input.value = valueText.slice(0, valueText.length - 1);
           state.result = state.praser();
