@@ -147,11 +147,11 @@ class Interface {
     if (!this.mshow) {
       this.mlist.classList.remove("left-[-52vw]");
       this.mlist.classList.add("left-[0vw]");
-
       this.mshow = true;
     } else {
       this.mlist.classList.remove("left-[0vw]");
       this.mlist.classList.add("left-[-52vw]");
+      this.input.focus()
       this.mshow = false;
     }
     event.stopPropagation();
@@ -169,6 +169,7 @@ class Interface {
     event.stopPropagation();
   }
   closeHist() {
+    this.input.focus();
     this.hist.classList.replace("right-[0vw]", "right-[-80vw]");
     this.histBtn.textContent = "History";
     this.histShow = false;
@@ -183,6 +184,7 @@ class Interface {
       this.mlist.classList.replace("left-[0vw]", "left-[-50vw]");
       this.mshow = false;
     }
+    this.input.focus();
   }
   hypSwitch() {
     let sciBtns = this.sciBtns;
@@ -324,11 +326,6 @@ class State {
       this.result = this.praser();
       this.updateInstResults(this.insertComma(String(this.result)));
     });
-    this.input.addEventListener("blur", () => {
-      setTimeout(() => {
-        this.input.focus();
-      }, 1000);
-    })
   }
 
   touchBtnStart(btns) {
