@@ -890,7 +890,11 @@
     font-size: var(--text-3xl);
     line-height: var(--tw-leading, var(--text-3xl--line-height));
     &:active {
-      border-radius: 0.5rem;
+      outline-style: var(--tw-outline-style);
+      outline-width: 4px;
+    }
+    &:active {
+      outline-color: var(--color-purple-500);
     }
     &:where([data-theme=dark], [data-theme=dark] *) {
       background-color: #302f2f;
