@@ -357,6 +357,11 @@ class State {
         this.insertComma(this.input.value, this.preSelection);
         this.result = this.praser();
         this.updateInstResults(this.insertComma(String(this.result)));
+        // styles
+        btn.classList.add("outline-4", "outline-purple-500")
+        setTimeout(() => {
+          btn.classList.remove("outline-4", "outline-purple-500")
+        }, 200);
       });
     }
   }
@@ -688,7 +693,7 @@ function setHistory(date, input, state) {
 
       if (day != today) {
         dayDiv.setAttribute("id", String(day));
-        dayDiv.classList.add("flex", "flex-col-reverse", "localHistDiv");
+        dayDiv.classList.add("flex", "flex-col-reverse", "localHistDiv", "text-right");
       } else {
         dayDiv = todayHist;
       }
