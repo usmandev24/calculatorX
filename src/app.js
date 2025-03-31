@@ -79,7 +79,7 @@ class Interface {
       this.instCalResult.classList.remove("text-[1rem]")
       this.instCalResult.classList.remove("text-[1.6rem]")
       this.input.classList.add("pt-[1rem]")
-    }else if (innerHeight > 660 && innerWidth < 400) {
+    } else if (innerHeight > 660 && innerWidth < 400) {
       this.instCalResult.classList.add("text-[1.6rem]")
       this.instCalResult.classList.remove("text-[1rem]")
       this.instCalResult.classList.remove("text-[1.8rem]")
@@ -337,12 +337,26 @@ class State {
         this.preValue,
         this.preSelection,
       );
+      this.showKey(this.key)
       this.insertComma(this.input.value, this.preSelection);
       this.result = this.praser();
       this.updateInstResults(this.insertComma(String(this.result)));
     });
   }
-
+  showKey(key) {
+    for (let btn of this.btns) {
+      if (this.vldTouchBtns.includes(btn.textContent)) {
+        if (key == btn.textContent  || (this.key == "/" && btn.textContent == "÷") ||
+        (this.key == "*" && btn.textContent == "×")
+        ) {
+          btn.classList.add("outline-4", "outline-purple-500")
+          setTimeout(() => {
+            btn.classList.remove("outline-4", "outline-purple-500")
+          }, 200);
+        }
+      }
+    }
+  }
   touchBtnStart(btns) {
     for (let btn of btns) {
       btn.addEventListener("click", (event) => {
@@ -576,13 +590,13 @@ class State {
   }
   updateInstResults(result) {
     this.instCalResult.textContent = "";
-    this.instCalResult.textContent ="="+result;
+    this.instCalResult.textContent = "=" + result;
   }
   updateHist(result) {
     let input = this.input;
     let item = document.createElement("p");
     let resItem = document.createElement("span");
-    resItem.classList.add("text-green-600", "text-[1.4rem]");
+    resItem.classList.add("text-green-600", "text-[1.4rem]", "font-bold");
     item.classList.add("text-[1.2rem]");
     this.preValue = this.preValue
       .replaceAll("+", " + ")
@@ -700,8 +714,8 @@ function setHistory(date, input, state) {
       for (let i = 0; i <= results.length - 1; i += 1) {
         let item = document.createElement("p");
         let resItem = document.createElement("span");
-        resItem.classList.add("text-green-600", "text-[1.4rem]");
-        item.classList.add("text-[1.2rem]");
+        resItem.classList.add("text-green-600", "text-[1.2rem]", "font-bold");
+        item.classList.add("text-[1.1rem]");
         let value = document.createTextNode(`${exps[i]} = `);
         resItem.textContent = results[i];
         item.appendChild(value);
