@@ -7,15 +7,18 @@ A fully functional and feature-rich calculator with light and dark mode themes. 
 - **Light and Dark Mode**: Users can switch between light and dark themes for a better user experience.
 - **Standard and Scientific Modes**: Supports basic arithmetic and advanced scientific functions. 
 - **Responsive UI**: The interface adapts seamlessly across different screen sizes.
-- **History Feature**: Keeps a record of previous calculations for seven days. You can remove any day history.
+- **History Feature**: Keeps a record of previous calculations for until you clear data of your browser. You can also clear all history or for any specific day.
 - **Live Results Display**: Instantly updates the results as users input expressions.
 - **Install** : You can install it using any modern browser. And can use it like a native app
 ## Screenshots
 Screenshots in desktop dark theme:
-![image](https://github.com/user-attachments/assets/171f66d9-9741-43f5-8f25-d4cc02b3b9f6)
+![image](https://github.com/user-attachments/assets/1af0a356-272c-42c8-83c5-296db76a91c6)
 
 Light Theme : 
-![image](https://github.com/user-attachments/assets/0240b4ad-27cb-4e02-9c18-9c722cfcd003)
+![image](https://github.com/user-attachments/assets/40b0d801-5a04-4aac-b844-71ff583c4183)
+
+## Mobile Devices: 
+![image](https://github.com/user-attachments/assets/e560a2f2-7755-4fe6-8674-f681a94353c3)
 
 ## Installation
 
