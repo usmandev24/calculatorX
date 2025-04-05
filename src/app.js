@@ -304,16 +304,7 @@ class State {
   start() {
     this.touchBtnStart(this.btns);
     this.keyFunctionsStart();
-    this.deletehBtn.onclick = () => this.deleteHist();
-    let todayDay = this.date.getDay().toString();
-    if (localStorage.getItem(todayDay) == null) {
-      this.memory[this.date.getDay()] = Object.create(null);
-    } else {
-      this.memory[this.date.getDay()] = JSON.parse(localStorage.getItem(todayDay))
-    }
-    let btnDeltHist = document.getElementById("deletetHist");
-    btnDeltHist.onclick = () => this.deleteTodayHist();
-
+    this.initLocalHist();
   }
   keyFunctionsStart() {
     this.input.addEventListener("keydown", (event) => {
@@ -346,8 +337,8 @@ class State {
   showKey(key) {
     for (let btn of this.btns) {
       if (this.vldTouchBtns.includes(btn.textContent)) {
-        if (key == btn.textContent  || (this.key == "/" && btn.textContent == "÷") ||
-        (this.key == "*" && btn.textContent == "×")
+        if (key == btn.textContent || (this.key == "/" && btn.textContent == "÷") ||
+          (this.key == "*" && btn.textContent == "×")
         ) {
           btn.classList.add("outline-4", "outline-purple-500")
           setTimeout(() => {
@@ -631,10 +622,30 @@ class State {
     }
 
   }
+  initLocalHist() {
+    let todayDate = this.date.toDateString();
+    let allDates = [];
+    if (localStorage.getItem("localHistObj") == null) {
+      this.memory[todayDate] = Object.create(null);
+      allDates.push(todayDate);
+      this.memory["allDates"] = allDates;
+    } else {
+      this.memory = JSON.parse(localStorage.getItem("localHistObj"));
+      allDates = this.memory["allDates"];
+      if (this.memory[todayDate] == null) {
+        this.memory[todayDate] = Object.create(null);
+        allDates.push(todayDate);
+        this.memory["allDates"] = allDates
+      }
+    }
+    this.deletehBtn.onclick = () => this.deleteHist();
+    let btnDeltHist = document.getElementById("deletetHist");
+    btnDeltHist.onclick = () => this.deleteTodayHist();
+  }
   updtLocStrgHistObj(result) {
-    let todayDay = this.date.getDay();
-    this.memory[todayDay][this.preValue] = String(result);
-    localStorage.setItem(String(todayDay), JSON.stringify(this.memory[todayDay]));
+    let todayDate = this.date.toDateString();
+    this.memory[todayDate][this.preValue] = String(result);
+    localStorage.setItem("localHistObj", JSON.stringify(this.memory));
   }
   setResults() {
     let result = this.result;
@@ -646,14 +657,13 @@ class State {
     }
   }
   deleteHist() {
-    let today = this.date.getDay();
+    let today = this.date.toDateString();
     let confirm = window.confirm(` " OK "  If you want to delete all History`);
     if (!confirm) return;
+    this.memory = Object.create(null);
     this.memory[today] = Object.create(null);
-    for (let day = 0; day <= 6; day += 1) {
-      if (day.toString() in localStorage)
-        localStorage.removeItem(day.toString());
-    }
+    this.memory["allDates"] = [today];
+    localStorage.setItem("localHistObj", JSON.stringify(this.memory))
     let histDivs = document.querySelectorAll(".localHistDiv");
     histDivs = Array.from(histDivs);
     for (let div of histDivs) {
@@ -662,10 +672,10 @@ class State {
     this.todayHist.textContent = "";
   }
   deleteTodayHist() {
-    let today = this.date.getDay();
+    let today = this.date.toDateString();
     this.todayHist.textContent = "";
     this.memory[today] = Object.create(null);
-    localStorage.removeItem(String(today));
+    localStorage.setItem("localHistObj", JSON.stringify(this.memory));
   }
 }
 function factorial(num) {
@@ -690,23 +700,17 @@ function setTheme(html, themeBtn) {
 }
 function setHistory(date, input, state) {
   let todayHist = document.getElementById("tHistItems");
-  let histObj;
-  let today = date.getDay();
-  let changed = false;
-  for (let day = today - 6; ;) {
-    if (day < 0) {
-      day += 7;
-      changed = true;
-    }
-    histObj = localStorage.getItem(String(day));
-    histObj = JSON.parse(histObj);
-    if (histObj != null) {
-      let results = Object.values(histObj);
-      let exps = Object.keys(histObj);
+  let today = date.toDateString();
+  let days;
+  let memory = JSON.parse(localStorage.getItem("localHistObj"));
+  if (memory) days = memory["allDates"];
+  if (!days) return;
+  for (let histObj of days) {
+    if (memory[histObj]) {
+      let results = Object.values(memory[histObj]);
+      let exps = Object.keys(memory[histObj]);
       let dayDiv = document.createElement("div");
-
-      if (day != today) {
-        dayDiv.setAttribute("id", String(day));
+      if (histObj != today) {
         dayDiv.classList.add("flex", "flex-col-reverse", "localHistDiv", "text-right");
       } else {
         dayDiv = todayHist;
@@ -741,13 +745,9 @@ function setHistory(date, input, state) {
           state.updateInstResults(state.result);
           input.focus();
         }
-      } let d = new Date;
-      if (day != today) {
-        let weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
-        let dayHeading = `${weekdays[day]}`;
-        if (today - 1 == day) {
-          dayHeading += ` (yesterday)`;
-        }
+      }
+      if (histObj != today) {
+        let dayHeading = `${histObj}`;
         let dHdiv = document.createElement('div');
         dHdiv.classList.add("inline-flex", "items-center");
         let clereBtn = document.createElement("img");
@@ -760,18 +760,12 @@ function setHistory(date, input, state) {
         dayDiv.appendChild(dHdiv);
         todayHist.before(dayDiv);
         clereBtn.onclick = () => {
-          localStorage.removeItem(String(day));
+          memory[histObj] = null;
+          localStorage.setItem("localHistObj", JSON.stringify(memory));
           dayDiv.classList.add("hidden");
         }
       }
     }
-    if (changed) {
-      day -= 7;
-      changed = false
-    }
-    if (day == today) break;
-    day += 1;
-
   }
 }
 function setScheme(interface) {
@@ -784,8 +778,7 @@ function setScheme(interface) {
   }
 }
 function main() {
-
-  let interface = new Interface(); interface.sh
+  let interface = new Interface(); 
   setTheme(interface.html, interface.themeBtn);
   setScheme(interface);
   interface.setEvents();
