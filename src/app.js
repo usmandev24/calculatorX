@@ -318,7 +318,7 @@ class State {
         this.input.selectionEnd = this.preSelection;
       }
       this.key = event.key;
-      if (event.key == "Enter") {
+      if (event.key == "Enter" || event.key == "=") {
         this.setResults();
       }
     });
